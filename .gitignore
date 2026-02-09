@@ -1,0 +1,36 @@
+# Environment variables and secrets
+.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files
+*.parquet
+
+# Backtest results (tracked - these are analysis output, not raw data)
+!stock_pipeline/backtest_results.json
+!stock_pipeline/backtest_results.csv
+!stock_pipeline/category_summary.csv
+
+# Logs
+*.log
