@@ -1,6 +1,6 @@
-# Multi-Asset Portfolio Intelligence Pipeline
+# The AI Integration Premium: Sharpe Ratio Analysis
 
-A production-grade data engineering pipeline that ingests real-time market data for 10 tech stocks, 3 cryptocurrencies, and weather data, orchestrated with Apache Airflow on Docker and stored in AWS S3 for analysis via Athena and Power BI.
+A data engineering pipeline that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Ingests daily stock data for 10 tech companies via Apache Airflow on Docker, stores in AWS S3, queries with Athena, and visualizes findings in Power BI.
 
 ## Key Finding: The Market Rewards AI Builders, Not AI Renters
 
@@ -16,47 +16,36 @@ Analysis of 3-year risk-adjusted returns (2023-2025) across 10 major tech stocks
 
 **Builder Premium: +58.4%** - Companies building proprietary AI outperform those renting it through partnerships by 58% on risk-adjusted returns.
 
+![Dashboard](dashboard.png)
+
 In 2026, Big Tech will spend ~$650B on AI infrastructure. But spending more doesn't mean earning more - Meta spends the least of the four hybrids ($125B) yet delivers the highest Sharpe ratio (2.369) because nearly 100% of its capex goes to proprietary AI. Amazon spends the most ($200B) but dilutes returns across logistics and third-party partnerships.
 
 ## Architecture
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌──────────┐     ┌─────────┐
-│  Data Sources│────>│ Apache Airflow│────>│  AWS S3   │────>│ Athena  │
+│  Data Source │────>│ Apache Airflow│────>│  AWS S3   │────>│ Athena  │
 │              │     │  (Docker)    │     │ (Data Lake)│    │ (Query) │
 │ Alpha Vantage│     │              │     │           │     └────┬────┘
-│ Coinbase API │     │ 4 DAGs:      │     │ Partitioned│         │
-│ OpenWeather  │     │ - Stocks     │     │ by date   │    ┌────▼────┐
-└─────────────┘     │ - Crypto     │     └───────────┘    │ Power BI│
-                    │ - Weather    │                       │(Dashboard)│
-                    │ - Monitor    │                       └─────────┘
-                    └──────────────┘
+│  (10 stocks) │     │ Scheduled    │     │ Partitioned│         │
+│              │     │ DAGs w/      │     │ by date   │    ┌────▼────┐
+└─────────────┘     │ rate limiting│     └───────────┘    │ Power BI│
+                    └──────────────┘                       │(Dashboard)│
+                                                           └─────────┘
 ```
 
-## Pipelines
-
-### Stock Pipeline (`stock_pipeline.py`)
+## Stock Pipeline (`stock_pipeline.py`)
 - **Stocks:** NVDA, MSFT, GOOGL, AMZN, META, CRM, ORCL, ADBE, AAPL, TSLA
 - **Source:** Alpha Vantage API (Global Quote)
 - **Schedule:** 5 PM ET Mon-Fri (after market close)
 - **Rate limiting:** 12-second intervals for free-tier compliance
 
-### Crypto Pipeline (`crypto_pipeline.py`)
-- **Assets:** BTC, ETH, SOL
-- **Source:** Coinbase Spot Price API
-- **Schedule:** Every 6 hours (crypto trades 24/7)
-- **Retry logic:** 3 attempts with 5-second backoff
+### Additional Pipelines
 
-### Weather Pipeline (`weather_pipeline.py`)
-- **Location:** Brooklyn, NY
-- **Source:** OpenWeatherMap API
-- **Schedule:** 9 AM daily
-- **Data quality:** Validates temperature, humidity, and completeness
-
-### Pipeline Monitor (`pipeline_monitor.py`)
-- **Schedule:** 6 PM daily
-- **Checks:** Verifies data landed in S3 for all 3 pipelines
-- **Output:** Health report with status for each pipeline
+The repo also includes pipelines demonstrating multi-source ingestion:
+- **Crypto** (`crypto_pipeline.py`): BTC, ETH, SOL via Coinbase API (6-hour schedule)
+- **Weather** (`weather_pipeline.py`): Brooklyn, NY via OpenWeatherMap API (daily)
+- **Monitor** (`pipeline_monitor.py`): Health checks across all pipelines
 
 ## Historical Backtest (`historical_backtest.py`)
 
@@ -82,7 +71,7 @@ Pulls 3 years of monthly adjusted close prices and calculates:
 
 All credentials managed via environment variables - zero hardcoded secrets:
 - AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
-- API keys (`ALPHA_VANTAGE_API_KEY`, `OPENWEATHER_API_KEY`)
+- API keys (`ALPHA_VANTAGE_API_KEY`)
 - Injected into Airflow containers via Docker Compose `.env` file
 - `.gitignore` prevents credential files from being committed
 
@@ -93,8 +82,14 @@ data-engineering-portfolio/
 ├── stock_pipeline/
 │   ├── stock_pipeline.py          # Airflow DAG: 10-stock ingestion
 │   ├── historical_backtest.py     # 3-year Sharpe ratio analysis
+│   ├── portfolio_analysis.py      # Build vs Rent + capex efficiency
 │   ├── backtest_results.json      # Stock-level results
-│   └── backtest_results.csv       # Power BI export
+│   ├── backtest_results.csv       # Stock-level CSV
+│   ├── powerbi_master.csv         # Power BI master dataset
+│   ├── build_vs_rent.csv          # Builders vs Integrators comparison
+│   ├── capex_efficiency.csv       # Sharpe per $B of AI spend
+│   ├── category_summary.csv       # Category-level averages
+│   └── value_chain_summary.csv    # Full value chain rankings
 ├── crypto_pipeline/
 │   └── crypto_pipeline.py         # Airflow DAG: BTC, ETH, SOL
 ├── weather_pipeline/
@@ -102,6 +97,9 @@ data-engineering-portfolio/
 ├── monitoring/
 │   ├── pipeline_monitor.py        # Airflow DAG: health checks
 │   └── data_quality.py            # Validation functions
+├── queries/
+│   └── sample_queries.sql         # Athena SQL showcase queries
+├── .env.example                   # Template for credentials
 ├── .gitignore
 ├── requirements.txt
 └── README.md
@@ -113,7 +111,7 @@ data-engineering-portfolio/
 - Docker Desktop
 - Python 3.12+
 - AWS account (S3, Athena)
-- API keys: Alpha Vantage, OpenWeatherMap
+- API keys: Alpha Vantage
 
 ### Quick Start
 ```bash
@@ -130,8 +128,6 @@ docker compose up -d
 
 # 4. Copy DAGs to Airflow
 cp stock_pipeline/stock_pipeline.py dags/
-cp crypto_pipeline/crypto_pipeline.py dags/
-cp weather_pipeline/weather_pipeline.py dags/
 cp monitoring/*.py dags/
 
 # 5. Access Airflow UI
@@ -141,10 +137,8 @@ cp monitoring/*.py dags/
 python stock_pipeline/historical_backtest.py
 ```
 
-## Data Sources
+## Data Source
 
 | Source | API | Rate Limit |
 |--------|-----|-----------|
 | [Alpha Vantage](https://www.alphavantage.co/) | Stock quotes + monthly history | 25 calls/day (free) |
-| [Coinbase](https://docs.cloud.coinbase.com/) | Crypto spot prices | No auth required |
-| [OpenWeatherMap](https://openweathermap.org/api) | Current weather | 60 calls/min (free) |
