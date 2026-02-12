@@ -1,4 +1,4 @@
-# The AI Integration Premium: Sharpe Ratio Analysis
+# Own the Model, Own the Returns
 
 A data engineering pipeline that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Ingests daily stock data for 10 tech companies via Apache Airflow on Docker, stores in AWS S3, queries with Athena, and visualizes findings in Power BI.
 
