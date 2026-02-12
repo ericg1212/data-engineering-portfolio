@@ -55,6 +55,20 @@ Pulls 3 years of monthly adjusted close prices and calculates:
 - Build vs. Rent premium (proprietary AI vs. partnership AI)
 - Capex efficiency (Sharpe per $B of estimated AI spend, sourced from 2025/2026 earnings guidance)
 
+## Infrastructure as Code
+
+AWS resources are defined in Terraform under `terraform/`, making the infrastructure fully reproducible:
+- **S3 bucket** - Data lake for stocks, crypto, and weather data
+- **Glue catalog database + 3 tables** - Schema definitions for Athena queries
+- **Athena workgroup** - Query engine with S3 results location
+
+```bash
+cd terraform
+terraform init
+terraform validate   # Verify configuration
+terraform plan       # Preview resources (no changes applied)
+```
+
 ## Tech Stack
 
 | Component | Technology |
@@ -104,6 +118,10 @@ data-engineering-portfolio/
 │   └── test_portfolio_analysis.py # Portfolio analysis tests
 ├── queries/
 │   └── sample_queries.sql         # Athena SQL showcase queries
+├── terraform/
+│   ├── main.tf                    # S3, Glue, Athena resource definitions
+│   ├── variables.tf               # Configurable parameters
+│   └── outputs.tf                 # Resource ARNs and names
 ├── docker-compose.yaml            # Airflow cluster (6 containers)
 ├── pytest.ini                     # Test configuration
 ├── .env.example                   # Template for credentials
