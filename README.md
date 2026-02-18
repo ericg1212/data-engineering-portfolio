@@ -54,6 +54,7 @@ Pulls 3 years of monthly adjusted close prices and calculates:
 - Category-level averages across the AI value chain
 - Build vs. Rent premium (proprietary AI vs. partnership AI)
 - Capex efficiency (Sharpe per $B of estimated AI spend, sourced from 2025/2026 earnings guidance)
+- Spearman rank correlation between AI% of capex and Sharpe ratio
 
 ## Infrastructure as Code
 
@@ -74,7 +75,7 @@ terraform plan       # Preview resources (no changes applied)
 | Component | Technology |
 |-----------|-----------|
 | Orchestration | Apache Airflow 2.10.4 (CeleryExecutor) |
-| Infrastructure | Docker Compose (6 containers) |
+| Infrastructure | Docker Compose (6 containers, PostgreSQL 16) |
 | Storage | AWS S3 (NDJSON, date-partitioned) |
 | Query Engine | AWS Athena (Presto SQL) |
 | Visualization | Power BI |
@@ -85,7 +86,7 @@ terraform plan       # Preview resources (no changes applied)
 
 All credentials managed via environment variables - zero hardcoded secrets:
 - AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
-- API keys (`ALPHA_VANTAGE_API_KEY`)
+- API keys (`ALPHA_VANTAGE_API_KEY`, `OPENWEATHER_API_KEY`)
 - Injected into Airflow containers via Docker Compose `.env` file
 - `.gitignore` prevents credential files from being committed
 
@@ -93,40 +94,44 @@ All credentials managed via environment variables - zero hardcoded secrets:
 
 ```
 data-engineering-portfolio/
+├── config.py                          # Central constants (symbols, S3 bucket, capex data)
 ├── stock_pipeline/
-│   ├── stock_pipeline.py          # Airflow DAG: 10-stock ingestion
-│   ├── historical_backtest.py     # 3-year Sharpe ratio analysis
-│   ├── portfolio_analysis.py      # Build vs Rent + capex efficiency
-│   ├── backtest_results.json      # Stock-level results
-│   ├── backtest_results.csv       # Stock-level CSV
-│   ├── powerbi_master.csv         # Power BI master dataset
-│   ├── build_vs_rent.csv          # Builders vs Integrators comparison
-│   ├── capex_efficiency.csv       # Sharpe per $B of AI spend
-│   ├── category_summary.csv       # Category-level averages
-│   └── value_chain_summary.csv    # Full value chain rankings
+│   ├── stock_pipeline.py              # Airflow DAG: 10-stock ingestion
+│   ├── historical_backtest.py         # 3-year Sharpe ratio analysis
+│   ├── portfolio_analysis.py          # Build vs Rent + capex efficiency
+│   ├── backtest_results.json          # Stock-level results
+│   ├── backtest_results.csv           # Stock-level CSV
+│   ├── powerbi_master.csv             # Power BI master dataset
+│   ├── build_vs_rent.csv              # Builders vs Integrators comparison
+│   ├── capex_efficiency.csv           # Sharpe per $B of AI spend
+│   ├── category_summary.csv           # Category-level averages
+│   └── value_chain_summary.csv        # Full value chain rankings
 ├── crypto_pipeline/
-│   └── crypto_pipeline.py         # Airflow DAG: BTC, ETH, SOL
+│   └── crypto_pipeline.py             # Airflow DAG: BTC, ETH, SOL
 ├── weather_pipeline/
-│   └── weather_pipeline.py        # Airflow DAG: Brooklyn weather
+│   └── weather_pipeline.py            # Airflow DAG: Brooklyn weather
 ├── monitoring/
-│   ├── pipeline_monitor.py        # Airflow DAG: health checks
-│   └── data_quality.py            # Validation functions
+│   ├── pipeline_monitor.py            # Airflow DAG: health checks
+│   └── data_quality.py                # Validation functions
 ├── tests/
-│   ├── conftest.py                # Shared pytest fixtures
-│   ├── test_sharpe_calculation.py # Sharpe ratio unit tests
-│   ├── test_data_quality.py       # Data validation tests
-│   └── test_portfolio_analysis.py # Portfolio analysis tests
+│   ├── conftest.py                    # Shared pytest fixtures
+│   ├── test_sharpe_calculation.py     # Sharpe ratio unit tests
+│   ├── test_data_quality.py           # Data validation tests
+│   └── test_portfolio_analysis.py     # Portfolio analysis tests
 ├── queries/
-│   └── sample_queries.sql         # Athena SQL showcase queries
+│   └── sample_queries.sql             # Athena SQL showcase queries
 ├── terraform/
-│   ├── main.tf                    # S3, Glue, Athena resource definitions
-│   ├── variables.tf               # Configurable parameters
-│   └── outputs.tf                 # Resource ARNs and names
-├── docker-compose.yaml            # Airflow cluster (6 containers)
-├── pytest.ini                     # Test configuration
-├── .env.example                   # Template for credentials
+│   ├── main.tf                        # S3, Glue, Athena resource definitions
+│   ├── variables.tf                   # Configurable parameters
+│   └── outputs.tf                     # Resource ARNs and names
+├── conftest.py                        # Root pytest conftest (sys.path setup)
+├── docker-compose.yaml                # Airflow cluster (6 containers)
+├── Makefile                           # dev shortcuts (make up/down/dags/test/lint)
+├── pytest.ini                         # Test configuration
+├── requirements.txt                   # Production dependencies
+├── requirements-dev.txt               # Dev/test dependencies
+├── .env.example                       # Template for credentials
 ├── .gitignore
-├── requirements.txt
 └── README.md
 ```
 
@@ -136,7 +141,7 @@ data-engineering-portfolio/
 - Docker Desktop
 - Python 3.12+
 - AWS account (S3, Athena)
-- API keys: Alpha Vantage
+- API keys: Alpha Vantage, OpenWeatherMap
 
 ### Quick Start
 ```bash
@@ -151,9 +156,8 @@ cp .env.example .env
 # 3. Start Airflow
 docker compose up -d
 
-# 4. Copy DAGs to Airflow
-cp stock_pipeline/stock_pipeline.py dags/
-cp monitoring/*.py dags/
+# 4. Copy DAGs to Airflow (also copies config.py)
+make dags
 
 # 5. Access Airflow UI
 # http://localhost:8080 (airflow/airflow)
@@ -164,18 +168,35 @@ python stock_pipeline/historical_backtest.py
 
 ### Running Tests
 ```bash
-# Install test dependencies
-pip install -r requirements.txt
+# Install dev dependencies
+pip install -r requirements-dev.txt
 
 # Run all tests
 pytest tests/ -v
 
 # Run a specific test file
 pytest tests/test_sharpe_calculation.py -v
+
+# Lint
+make lint
 ```
 
-## Data Source
+### Makefile Commands
+```bash
+make setup    # Copy DAGs + create .env from template
+make up       # Start Airflow stack
+make down     # Stop Airflow stack
+make dags     # Copy pipeline files (incl. config.py) into ./dags
+make test     # Run pytest
+make lint     # flake8 across all source dirs
+make logs     # Tail scheduler + worker logs
+make clean    # Remove __pycache__, logs, stopped containers
+```
+
+## Data Sources
 
 | Source | API | Rate Limit |
 |--------|-----|-----------|
 | [Alpha Vantage](https://www.alphavantage.co/) | Stock quotes + monthly history | 25 calls/day (free) |
+| [Coinbase](https://docs.cdp.coinbase.com/coinbase-app/docs/api-prices) | Crypto spot prices | No limit (public) |
+| [OpenWeatherMap](https://openweathermap.org/api) | Current weather | 1,000 calls/day (free) |
