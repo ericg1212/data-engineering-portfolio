@@ -14,55 +14,55 @@ class TestValidateWeatherData:
 
     def test_missing_temperature_raises_error(self):
         """Missing 'temperature' field should raise DataQualityError."""
-        data = {'humidity': 50, 'weather': 'Clear', 'city': 'Brooklyn'}
+        data = {'humidity': 50, 'description': 'Clear', 'city': 'Brooklyn'}
         with pytest.raises(DataQualityError, match="Missing required field: temperature"):
             validate_weather_data(data)
 
     def test_missing_humidity_raises_error(self):
         """Missing 'humidity' field should raise DataQualityError."""
-        data = {'temperature': 72, 'weather': 'Clear', 'city': 'Brooklyn'}
+        data = {'temperature': 72, 'description': 'Clear', 'city': 'Brooklyn'}
         with pytest.raises(DataQualityError, match="Missing required field: humidity"):
             validate_weather_data(data)
 
-    def test_missing_weather_raises_error(self):
-        """Missing 'weather' field should raise DataQualityError."""
+    def test_missing_description_raises_error(self):
+        """Missing 'description' field should raise DataQualityError."""
         data = {'temperature': 72, 'humidity': 50, 'city': 'Brooklyn'}
-        with pytest.raises(DataQualityError, match="Missing required field: weather"):
+        with pytest.raises(DataQualityError, match="Missing required field: description"):
             validate_weather_data(data)
 
     def test_temperature_too_high(self):
         """Temperature above 150F should fail."""
-        data = {'temperature': 200, 'humidity': 50, 'weather': 'Hot', 'city': 'Brooklyn'}
+        data = {'temperature': 200, 'humidity': 50, 'description': 'Hot', 'city': 'Brooklyn'}
         with pytest.raises(DataQualityError, match="Temperature out of range"):
             validate_weather_data(data)
 
     def test_temperature_too_low(self):
         """Temperature below -100F should fail."""
-        data = {'temperature': -150, 'humidity': 50, 'weather': 'Cold', 'city': 'Brooklyn'}
+        data = {'temperature': -150, 'humidity': 50, 'description': 'Cold', 'city': 'Brooklyn'}
         with pytest.raises(DataQualityError, match="Temperature out of range"):
             validate_weather_data(data)
 
     def test_humidity_over_100(self):
         """Humidity above 100% should fail."""
-        data = {'temperature': 72, 'humidity': 110, 'weather': 'Humid', 'city': 'Brooklyn'}
+        data = {'temperature': 72, 'humidity': 110, 'description': 'Humid', 'city': 'Brooklyn'}
         with pytest.raises(DataQualityError, match="Humidity out of range"):
             validate_weather_data(data)
 
     def test_humidity_negative(self):
         """Negative humidity should fail."""
-        data = {'temperature': 72, 'humidity': -5, 'weather': 'Dry', 'city': 'Brooklyn'}
+        data = {'temperature': 72, 'humidity': -5, 'description': 'Dry', 'city': 'Brooklyn'}
         with pytest.raises(DataQualityError, match="Humidity out of range"):
             validate_weather_data(data)
 
     def test_missing_city(self):
         """Missing city should fail."""
-        data = {'temperature': 72, 'humidity': 50, 'weather': 'Clear'}
+        data = {'temperature': 72, 'humidity': 50, 'description': 'Clear'}
         with pytest.raises(DataQualityError, match="Missing city name"):
             validate_weather_data(data)
 
     def test_multiple_errors_reported(self):
         """Multiple validation failures should all appear in error message."""
-        data = {'temperature': 200, 'humidity': -5, 'weather': 'Bad'}
+        data = {'temperature': 200, 'humidity': -5, 'description': 'Bad'}
         with pytest.raises(DataQualityError) as exc_info:
             validate_weather_data(data)
         error_msg = str(exc_info.value)

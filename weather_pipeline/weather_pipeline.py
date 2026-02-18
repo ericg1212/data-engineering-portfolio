@@ -101,7 +101,7 @@ def transform_weather():
             'temperature': data['main'].get('temp', 0),
             'feels_like': data['main'].get('feels_like', 0),
             'humidity': data['main'].get('humidity', 0),
-            'weather': data['weather'][0].get('description', 'unknown') if data.get('weather') else 'unknown',
+            'description': data['weather'][0].get('description', 'unknown') if data.get('weather') else 'unknown',
             'wind_speed': data.get('wind', {}).get('speed', 0),
             'timestamp': datetime.now().isoformat(),
         }

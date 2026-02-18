@@ -15,7 +15,7 @@ def validate_weather_data(data: Dict[str, Any]) -> bool:
     errors = []
     
     # Check required fields
-    required_fields = ['temperature', 'humidity', 'weather']
+    required_fields = ['temperature', 'humidity', 'description']
     for field in required_fields:
         if field not in data:
             errors.append(f"Missing required field: {field}")
