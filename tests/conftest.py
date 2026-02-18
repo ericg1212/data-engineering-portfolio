@@ -70,7 +70,7 @@ def valid_weather_data():
     return {
         'temperature': 72.5,
         'humidity': 55,
-        'weather': 'Clear',
+        'description': 'Clear',
         'city': 'Brooklyn',
     }
 
