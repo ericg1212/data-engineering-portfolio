@@ -52,7 +52,7 @@ def extract_weather():
             # Validate response has required fields
             required_fields = ['main', 'weather', 'wind', 'name']
             if not all(field in data for field in required_fields):
-                raise ValueError(f"Missing required fields in API response")
+                raise ValueError("Missing required fields in API response")
             
             # Save to temp file
             with open('/tmp/weather_raw.json', 'w') as f:

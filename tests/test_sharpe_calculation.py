@@ -1,10 +1,8 @@
 """Tests for Sharpe ratio calculation in historical_backtest.py."""
 
-import pytest
 import pandas as pd
-import numpy as np
 
-from stock_pipeline.historical_backtest import calculate_sharpe, RISK_FREE_RATE, STOCKS
+from stock_pipeline.historical_backtest import calculate_sharpe, STOCKS
 
 
 class TestCalculateSharpe:

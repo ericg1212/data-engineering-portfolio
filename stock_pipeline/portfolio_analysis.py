@@ -44,7 +44,7 @@ def build_vs_rent_analysis(results):
     i_sharpe = sum(r['sharpe_ratio'] for r in integrators) / len(integrators)
     premium = (b_sharpe - i_sharpe) / abs(i_sharpe) * 100
 
-    logger.info(f"\n  RISK-ADJUSTED RETURNS (Sharpe Ratio)")
+    logger.info("\n  RISK-ADJUSTED RETURNS (Sharpe Ratio)")
     logger.info(f"  Builders (META, GOOGL):     {b_sharpe:.3f}")
     logger.info(f"  Integrators (MSFT, AMZN):   {i_sharpe:.3f}")
     logger.info(f"  Builder premium:            {premium:+.1f}%")
@@ -53,7 +53,7 @@ def build_vs_rent_analysis(results):
     b_return = sum(r['annualized_return'] for r in builders) / len(builders)
     i_return = sum(r['annualized_return'] for r in integrators) / len(integrators)
 
-    logger.info(f"\n  ABSOLUTE RETURNS")
+    logger.info("\n  ABSOLUTE RETURNS")
     logger.info(f"  Builders:     {b_return:.1f}%")
     logger.info(f"  Integrators:  {i_return:.1f}%")
     logger.info(f"  Gap:          {b_return - i_return:+.1f} percentage points")
@@ -62,10 +62,13 @@ def build_vs_rent_analysis(results):
     b_vol = sum(r['annualized_volatility'] for r in builders) / len(builders)
     i_vol = sum(r['annualized_volatility'] for r in integrators) / len(integrators)
 
-    logger.info(f"\n  RISK (Volatility)")
+    logger.info("\n  RISK (Volatility)")
     logger.info(f"  Builders:     {b_vol:.1f}%")
     logger.info(f"  Integrators:  {i_vol:.1f}%")
-    logger.info(f"  Builders carry {b_vol - i_vol:+.1f}pp more volatility but compensate with {b_return - i_return:+.1f}pp more return")
+    logger.info(
+        f"  Builders carry {b_vol - i_vol:+.1f}pp more volatility"
+        f" but compensate with {b_return - i_return:+.1f}pp more return"
+    )
 
     return {
         'builder_sharpe': b_sharpe,
@@ -191,7 +194,12 @@ def save_analysis(build_rent, capex_rows, chain_summary):
     with open(bvr_path, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['metric', 'AI Builders', 'AI Integrators', 'premium'])
-        writer.writerow(['Sharpe Ratio', build_rent['builder_sharpe'], build_rent['integrator_sharpe'], f"+{build_rent['premium_pct']}%"])
+        writer.writerow([
+            'Sharpe Ratio',
+            build_rent['builder_sharpe'],
+            build_rent['integrator_sharpe'],
+            f"+{build_rent['premium_pct']}%",
+        ])
         writer.writerow(['Annualized Return %', build_rent['builder_return'], build_rent['integrator_return'], ''])
         writer.writerow(['Volatility %', build_rent['builder_vol'], build_rent['integrator_vol'], ''])
     logger.info(f"\nSaved: {bvr_path}")
@@ -229,7 +237,7 @@ def main():
     logger.info("\n" + "=" * 70)
     logger.info("HEADLINE: The market rewards AI builders, not AI renters.")
     logger.info(f"Builder premium: +{build_rent['premium_pct']}% on risk-adjusted returns.")
-    logger.info(f"Combined 2026 AI capex: ~$650B across Big Tech.")
+    logger.info("Combined 2026 AI capex: ~$650B across Big Tech.")
     logger.info("=" * 70)
 
 

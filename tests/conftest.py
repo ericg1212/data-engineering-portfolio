@@ -1,13 +1,10 @@
 """Shared pytest fixtures for the data engineering portfolio test suite."""
 
 import sys
-import json
-import os
 import pytest
 import pandas as pd
 import numpy as np
 import boto3
-from datetime import datetime
 from unittest.mock import MagicMock
 from moto import mock_aws
 

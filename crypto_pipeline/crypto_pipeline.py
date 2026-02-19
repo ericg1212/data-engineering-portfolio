@@ -8,7 +8,7 @@ import logging
 import os
 from time import sleep
 from config import CRYPTO_SYMBOLS, S3_BUCKET
-from data_quality import validate_stock_data, log_data_stats
+from data_quality import log_data_stats
 
 logger = logging.getLogger(__name__)
 

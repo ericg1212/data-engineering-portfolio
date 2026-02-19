@@ -187,7 +187,9 @@ def generate_health_report(**context):
     
     logger.info("=" * 50)
     
-    if weather_status.get('status') == 'OK' and stock_status.get('status') == 'OK' and crypto_status.get('status') == 'OK':
+    if (weather_status.get('status') == 'OK'
+            and stock_status.get('status') == 'OK'
+            and crypto_status.get('status') == 'OK'):
         logger.info("✅ All pipelines healthy!")
         return 'HEALTHY'
     else:
