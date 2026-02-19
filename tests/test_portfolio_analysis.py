@@ -1,7 +1,5 @@
 """Tests for portfolio analysis functions in stock_pipeline/portfolio_analysis.py."""
 
-import pytest
-
 from stock_pipeline.portfolio_analysis import (
     build_vs_rent_analysis,
     capex_efficiency_analysis,

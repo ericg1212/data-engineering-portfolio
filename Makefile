@@ -44,7 +44,7 @@ test:
 	pytest tests/ -v
 
 lint:
-	flake8 stock_pipeline/ crypto_pipeline/ weather_pipeline/ monitoring/ tests/ --max-line-length=120
+	flake8 stock_pipeline/ crypto_pipeline/ weather_pipeline/ monitoring/ tests/
 
 clean:
 	@find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true

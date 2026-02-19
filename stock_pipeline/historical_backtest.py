@@ -211,9 +211,9 @@ def run_backtest():
             if least_efficient['sharpe_per_B'] > 0 else 0
 
         logger.info(f"\n  Most efficient:  {most_efficient['symbol']} "
-                     f"({most_efficient['sharpe_per_B']:.4f} Sharpe/$B)")
+                    f"({most_efficient['sharpe_per_B']:.4f} Sharpe/$B)")
         logger.info(f"  Least efficient: {least_efficient['symbol']} "
-                     f"({least_efficient['sharpe_per_B']:.4f} Sharpe/$B)")
+                    f"({least_efficient['sharpe_per_B']:.4f} Sharpe/$B)")
         logger.info(f"  Efficiency gap:  {efficiency_ratio:.1f}x")
 
     logger.info("\n" + "=" * 70)

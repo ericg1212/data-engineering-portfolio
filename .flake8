@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 120
+extend-ignore =
+    # Pre-existing whitespace/blank-line style in original pipeline files
+    E302,
+    E303,
+    E305,
+    W292,
+    W293,
+per-file-ignores =
+    # sys.modules stubs must be set before some downstream imports
+    tests/conftest.py: E402
+    # sys.path.insert for standalone execution causes E402 on subsequent imports
+    stock_pipeline/historical_backtest.py: E402
+    stock_pipeline/portfolio_analysis.py: E402
