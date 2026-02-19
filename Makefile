@@ -22,6 +22,7 @@ dags:
 	cp stock_pipeline/stock_pipeline.py dags/
 	cp crypto_pipeline/crypto_pipeline.py dags/
 	cp weather_pipeline/weather_pipeline.py dags/
+	cp forecast_pipeline/forecast_pipeline.py dags/
 	cp monitoring/pipeline_monitor.py dags/
 	cp monitoring/data_quality.py dags/
 	@echo "DAGs copied to ./dags"

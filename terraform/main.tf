@@ -176,6 +176,58 @@ resource "aws_glue_catalog_table" "weather" {
   }
 }
 
+resource "aws_glue_catalog_table" "forecast" {
+  name          = "forecast"
+  database_name = aws_glue_catalog_database.main.name
+  table_type    = "EXTERNAL_TABLE"
+  parameters    = { "classification" = "json" }
+
+  storage_descriptor {
+    location      = "s3://${var.s3_bucket_name}/forecast/"
+    input_format  = "org.apache.hadoop.mapred.TextInputFormat"
+    output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+    ser_de_info {
+      serialization_library = "org.openx.data.jsonserde.JsonSerDe"
+    }
+    columns {
+      name = "city"
+      type = "string"
+    }
+    columns {
+      name = "forecast_time"
+      type = "string"
+    }
+    columns {
+      name = "temperature"
+      type = "double"
+    }
+    columns {
+      name = "feels_like"
+      type = "double"
+    }
+    columns {
+      name = "humidity"
+      type = "int"
+    }
+    columns {
+      name = "description"
+      type = "string"
+    }
+    columns {
+      name = "wind_speed"
+      type = "double"
+    }
+    columns {
+      name = "timestamp"
+      type = "string"
+    }
+  }
+  partition_keys {
+    name = "date"
+    type = "string"
+  }
+}
+
 # Athena Workgroup
 
 resource "aws_athena_workgroup" "main" {
