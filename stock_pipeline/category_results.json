@@ -14,24 +14,10 @@
     "stock_count": 2
   },
   {
-    "category": "Control",
-    "avg_return": 55.51,
-    "avg_volatility": 40.01,
-    "avg_sharpe": 1.272,
-    "stock_count": 2
-  },
-  {
     "category": "Infrastructure",
     "avg_return": 153.98,
     "avg_volatility": 44.82,
     "avg_sharpe": 3.335,
     "stock_count": 1
-  },
-  {
-    "category": "Legacy Tech",
-    "avg_return": 28.907,
-    "avg_volatility": 36.697,
-    "avg_sharpe": 0.638,
-    "stock_count": 3
   }
 ]
