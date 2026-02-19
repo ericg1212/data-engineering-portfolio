@@ -40,6 +40,9 @@ def s3_client(monkeypatch):
     with mock_aws():
         client = boto3.client('s3', region_name='us-east-1')
         client.create_bucket(Bucket='test-bucket')
+        # Create Athena workgroup so partition registration calls don't fail
+        athena = boto3.client('athena', region_name='us-east-1')
+        athena.create_work_group(Name='stock_analysis_workgroup')
         yield client
 
 

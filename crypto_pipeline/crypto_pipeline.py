@@ -7,7 +7,7 @@ import boto3
 import logging
 import os
 from time import sleep
-from config import CRYPTO_SYMBOLS, S3_BUCKET
+from config import CRYPTO_SYMBOLS, S3_BUCKET, GLUE_DATABASE, ATHENA_WORKGROUP
 from data_quality import log_data_stats
 
 logger = logging.getLogger(__name__)
@@ -157,13 +157,31 @@ def load_to_s3():
         
         response = s3.head_object(Bucket=bucket, Key=key)
         logger.info(f"Upload verified. File size: {response['ContentLength']} bytes")
-        
+
+        # Register partition with Athena so it's queryable immediately
+        athena = boto3.client(
+            'athena',
+            aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+            aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+            region_name=os.environ.get('AWS_DEFAULT_REGION', 'us-east-1')
+        )
+        location = f"s3://{bucket}/crypto/date={date_str}/"
+        athena.start_query_execution(
+            QueryString=(
+                f"ALTER TABLE crypto ADD IF NOT EXISTS "
+                f"PARTITION (date='{date_str}') LOCATION '{location}'"
+            ),
+            QueryExecutionContext={'Database': GLUE_DATABASE},
+            WorkGroup=ATHENA_WORKGROUP,
+        )
+        logger.info(f"Registered Athena partition date={date_str} for crypto")
+
         return f"s3://{bucket}/{key}"
-        
+
     except FileNotFoundError:
         logger.error("Transformed crypto data file not found")
         raise
-        
+
     except Exception as e:
         logger.error(f"Upload to S3 failed: {str(e)}")
         raise
