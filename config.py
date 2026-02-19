@@ -62,3 +62,5 @@ WEATHER_CITY = 'Brooklyn'
 # --- AWS / Storage ---
 
 S3_BUCKET = 'ai-sharpe-analysis-eric'
+GLUE_DATABASE = 'stock_analysis_db'
+ATHENA_WORKGROUP = 'stock_analysis_workgroup'
