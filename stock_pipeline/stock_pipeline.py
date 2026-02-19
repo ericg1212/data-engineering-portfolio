@@ -116,7 +116,7 @@ def transform_stock_data():
                 'change_percent': round(change_percent_num, 2),
                 'volume': volume,
                 'trading_day': stock['trading_day'],
-                'extracted_at': datetime.now().isoformat(),
+                'timestamp': datetime.now().isoformat(),
             }
             
             transformed.append(transformed_stock)
@@ -168,7 +168,7 @@ def load_to_s3():
         # Upload to S3
         date_str = datetime.now().strftime('%Y-%m-%d')
         timestamp_str = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        key = f"stocks/{date_str}/{timestamp_str}.json"
+        key = f"stocks/date={date_str}/{timestamp_str}.json"
         
         s3.put_object(
             Bucket=bucket,
