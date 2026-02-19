@@ -45,6 +45,7 @@ In 2026, Big Tech will spend ~$650B on AI infrastructure. But spending more does
 The repo also includes pipelines demonstrating multi-source ingestion:
 - **Crypto** (`crypto_pipeline.py`): BTC, ETH, SOL via Coinbase API (6-hour schedule)
 - **Weather** (`weather_pipeline.py`): Brooklyn, NY via OpenWeatherMap API (daily)
+- **Forecast** (`forecast_pipeline.py`): 5-day weather forecast via OpenWeatherMap API (daily at 6 AM)
 - **Monitor** (`pipeline_monitor.py`): Health checks across all pipelines
 
 ## Historical Backtest (`historical_backtest.py`)
@@ -59,8 +60,8 @@ Pulls 3 years of monthly adjusted close prices and calculates:
 ## Infrastructure as Code
 
 AWS resources are defined in Terraform under `terraform/`, making the infrastructure fully reproducible:
-- **S3 bucket** - Data lake for stocks, crypto, and weather data
-- **Glue catalog database + 3 tables** - Schema definitions for Athena queries
+- **S3 bucket** - Data lake for stocks, crypto, weather, and forecast data
+- **Glue catalog database + 4 tables** - Schema definitions for Athena queries (stocks, crypto, weather, forecast)
 - **Athena workgroup** - Query engine with S3 results location
 
 ```bash
@@ -110,6 +111,8 @@ data-engineering-portfolio/
 │   └── crypto_pipeline.py             # Airflow DAG: BTC, ETH, SOL
 ├── weather_pipeline/
 │   └── weather_pipeline.py            # Airflow DAG: Brooklyn weather
+├── forecast_pipeline/
+│   └── forecast_pipeline.py           # Airflow DAG: 5-day weather forecast
 ├── monitoring/
 │   ├── pipeline_monitor.py            # Airflow DAG: health checks
 │   └── data_quality.py                # Validation functions
@@ -117,7 +120,8 @@ data-engineering-portfolio/
 │   ├── conftest.py                    # Shared pytest fixtures
 │   ├── test_sharpe_calculation.py     # Sharpe ratio unit tests
 │   ├── test_data_quality.py           # Data validation tests
-│   └── test_portfolio_analysis.py     # Portfolio analysis tests
+│   ├── test_portfolio_analysis.py     # Portfolio analysis tests
+│   └── test_forecast_pipeline.py      # Forecast pipeline tests
 ├── queries/
 │   └── sample_queries.sql             # Athena SQL showcase queries
 ├── terraform/
@@ -160,7 +164,7 @@ docker compose up -d
 make dags
 
 # 5. Access Airflow UI
-# http://localhost:8080 (airflow/airflow)
+# http://localhost:8090 (airflow/airflow)
 
 # 6. Run the historical backtest
 python stock_pipeline/historical_backtest.py
