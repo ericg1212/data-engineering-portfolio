@@ -65,14 +65,35 @@ resource "aws_glue_catalog_table" "stocks" {
     ser_de_info {
       serialization_library = "org.openx.data.jsonserde.JsonSerDe"
     }
-    columns { name = "symbol";         type = "string" }
-    columns { name = "price";          type = "double" }
-    columns { name = "volume";         type = "bigint" }
-    columns { name = "change_percent"; type = "double" }
-    columns { name = "trading_day";    type = "string" }
-    columns { name = "timestamp";      type = "string" }
+    columns {
+      name = "symbol"
+      type = "string"
+    }
+    columns {
+      name = "price"
+      type = "double"
+    }
+    columns {
+      name = "volume"
+      type = "bigint"
+    }
+    columns {
+      name = "change_percent"
+      type = "double"
+    }
+    columns {
+      name = "trading_day"
+      type = "string"
+    }
+    columns {
+      name = "timestamp"
+      type = "string"
+    }
   }
-  partition_keys { name = "date"; type = "string" }
+  partition_keys {
+    name = "date"
+    type = "string"
+  }
 }
 
 resource "aws_glue_catalog_table" "crypto" {
@@ -88,11 +109,23 @@ resource "aws_glue_catalog_table" "crypto" {
     ser_de_info {
       serialization_library = "org.openx.data.jsonserde.JsonSerDe"
     }
-    columns { name = "symbol";    type = "string" }
-    columns { name = "price";     type = "double" }
-    columns { name = "timestamp"; type = "string" }
+    columns {
+      name = "symbol"
+      type = "string"
+    }
+    columns {
+      name = "price"
+      type = "double"
+    }
+    columns {
+      name = "timestamp"
+      type = "string"
+    }
   }
-  partition_keys { name = "date"; type = "string" }
+  partition_keys {
+    name = "date"
+    type = "string"
+  }
 }
 
 resource "aws_glue_catalog_table" "weather" {
@@ -108,15 +141,39 @@ resource "aws_glue_catalog_table" "weather" {
     ser_de_info {
       serialization_library = "org.openx.data.jsonserde.JsonSerDe"
     }
-    columns { name = "city";        type = "string" }
-    columns { name = "temperature"; type = "double" }
-    columns { name = "feels_like";  type = "double" }
-    columns { name = "humidity";    type = "int"    }
-    columns { name = "description"; type = "string" }
-    columns { name = "wind_speed";  type = "double" }
-    columns { name = "timestamp";   type = "string" }
+    columns {
+      name = "city"
+      type = "string"
+    }
+    columns {
+      name = "temperature"
+      type = "double"
+    }
+    columns {
+      name = "feels_like"
+      type = "double"
+    }
+    columns {
+      name = "humidity"
+      type = "int"
+    }
+    columns {
+      name = "description"
+      type = "string"
+    }
+    columns {
+      name = "wind_speed"
+      type = "double"
+    }
+    columns {
+      name = "timestamp"
+      type = "string"
+    }
   }
-  partition_keys { name = "date"; type = "string" }
+  partition_keys {
+    name = "date"
+    type = "string"
+  }
 }
 
 # Athena Workgroup

@@ -152,7 +152,7 @@ def load_to_s3():
         # Upload to S3
         date_str = datetime.now().strftime('%Y-%m-%d')
         timestamp_str = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        key = f"weather/{date_str}/{timestamp_str}.json"
+        key = f"weather/date={date_str}/{timestamp_str}.json"
         
         s3.put_object(
             Bucket=bucket,
