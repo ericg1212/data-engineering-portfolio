@@ -41,5 +41,8 @@ jobs:
       - name: Lint
         run: flake8 utils.py stock_pipeline/ crypto_pipeline/ weather_pipeline/ edgar_pipeline/ fred_pipeline/ analysis_pipeline/ monitoring/ tests/
 
+      - name: Terraform fmt check
+        run: terraform fmt -check terraform/
+
       - name: Run tests
         run: pytest tests/ -v
