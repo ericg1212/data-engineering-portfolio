@@ -1,6 +1,6 @@
 # Own the Model, Own the Returns
 
-A data engineering pipeline that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Ingests daily stock data for 10 tech companies via Apache Airflow on Docker, stores in AWS S3, queries with Athena, and visualizes findings in Power BI.
+A data engineering portfolio that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Five production Airflow pipelines ingest data from Alpha Vantage, SEC EDGAR, FRED, Coinbase, and OpenWeatherMap — storing in AWS S3, querying with Athena, and visualizing findings in Power BI. 112 tests with moto-mocked AWS.
 
 ## Key Finding: The Market Rewards AI Builders, Not AI Renters
 
@@ -14,55 +14,79 @@ Analysis of risk-adjusted returns (Jan 2023 – present) across 10 major tech st
 | Control | AAPL, TSLA | 1.131 | Mixed AI exposure |
 | Legacy Tech | CRM, ORCL, ADBE | 0.247 | Traditional software |
 
-**Builder Premium: +111.5%** - Companies building proprietary AI outperform those renting it through partnerships by 111% on risk-adjusted returns. The premium has widened from +58.4% (Dec 2025) as AI integrators weakened in early 2026 while builders held up.
+**Builder Premium: +111.5%** — Companies building proprietary AI outperform those renting it through partnerships by 111% on risk-adjusted returns. The premium has widened from +58.4% (Dec 2025) as AI integrators weakened in early 2026 while builders held up.
+
+Spearman rank correlation between AI% of capex and Sharpe ratio: **ρ = +0.800** — the premium holds stock by stock, not just in aggregate.
+
+The FRED macro pipeline adds the next research question: **does the AI Sharpe premium hold across different macro regimes** (rising rates, high inflation, elevated unemployment)?
 
 ![Dashboard](dashboard.png)
 
-In 2026, Big Tech will spend ~$650B on AI infrastructure. But spending more doesn't mean earning more - Meta spends the least of the four hybrids ($125B) yet delivers the highest Sharpe ratio (2.138) because nearly 100% of its capex goes to proprietary AI. Amazon spends the most ($200B) but dilutes returns across logistics and third-party partnerships.
+In 2026, Big Tech will spend ~$650B on AI infrastructure. But spending more doesn't mean earning more — Meta spends the least of the four hybrids ($125B) yet delivers the highest Sharpe ratio (2.138) because nearly 100% of its capex goes to proprietary AI. Amazon spends the most ($200B) but dilutes returns across logistics and third-party partnerships.
 
 ## Architecture
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌──────────┐     ┌─────────┐
-│  Data Source │────>│ Apache Airflow│────>│  AWS S3   │────>│ Athena  │
-│              │     │  (Docker)    │     │ (Data Lake)│    │ (Query) │
-│ Alpha Vantage│     │              │     │           │     └────┬────┘
-│  (10 stocks) │     │ Scheduled    │     │ Partitioned│         │
-│              │     │ DAGs w/      │     │ by date   │    ┌────▼────┐
-└─────────────┘     │ rate limiting│     └───────────┘    │ Power BI│
-                    └──────────────┘                       │(Dashboard)│
-                                                           └─────────┘
+┌──────────────────┐     ┌──────────────┐     ┌───────────┐     ┌─────────┐
+│   Data Sources    │────>│Apache Airflow│────>│  AWS S3   │────>│ Athena  │
+│                   │     │  (Docker)    │     │(Data Lake)│     │ (Query) │
+│ Alpha Vantage     │     │              │     │           │     └────┬────┘
+│ SEC EDGAR         │     │ 5 scheduled  │     │Partitioned│          │
+│ FRED (St. Louis   │     │ DAGs +       │     │by symbol/ │     ┌────▼────┐
+│   Fed)            │     │ analysis     │     │date/series│     │Power BI │
+│ Coinbase          │     │ pipeline     │     │           │     │(Dashboard)│
+│ OpenWeatherMap    │     └──────────────┘     └───────────┘     └─────────┘
+└──────────────────┘
 ```
 
-## Stock Pipeline (`stock_pipeline.py`)
+## Pipelines
+
+### Stock Pipeline (`stock_pipeline/stock_pipeline.py`)
 - **Stocks:** NVDA, MSFT, GOOGL, AMZN, META, CRM, ORCL, ADBE, AAPL, TSLA
 - **Source:** Alpha Vantage API (Global Quote)
 - **Schedule:** 5 PM ET Mon-Fri (after market close)
-- **Rate limiting:** 12-second intervals for free-tier compliance
+- **S3 path:** `stocks/date={date}/data.json`
+
+### SEC EDGAR Pipeline (`edgar_pipeline/edgar_pipeline.py`)
+- **Source:** SEC EDGAR Company Facts API (free, no auth beyond User-Agent header)
+- **Data:** Annual capex + revenue from 10-K filings for META, GOOGL, MSFT, AMZN
+- **Schedule:** Quarterly (Jan/Apr/Jul/Oct 1) — picks up each company's 10-K within 3 months
+- **S3 path:** `fundamentals/cik={cik}/year={year}/data.json`
+- Replaces hardcoded capex figures with authoritative SEC filings
+
+### FRED Macro Pipeline (`fred_pipeline/fred_pipeline.py`)
+- **Source:** St. Louis Fed FRED API (free, API key required)
+- **Series:** GS10 (10-yr Treasury), CPIAUCSL (CPI), UNRATE (unemployment), FEDFUNDS (fed funds rate)
+- **Schedule:** 1st of every month (FRED releases with ~2-week lag)
+- **S3 path:** `macro_indicators/series={series_id}/year={year}/data.json`
+- Enables macro regime analysis: does the AI premium hold across rate cycles?
+
+### Analysis Pipeline (`analysis_pipeline/analysis_pipeline.py`)
+- Runs Sharpe backtest + portfolio analysis automatically after daily stock load
+- **Schedule:** 5:30 PM Mon-Fri (30 min after stock pipeline)
+- Replaces the manual `make analyze` command
 
 ### Additional Pipelines
+- **Crypto** (`crypto_pipeline/crypto_pipeline.py`): BTC, ETH, SOL via Coinbase API (6-hour schedule)
+- **Weather** (`weather_pipeline/weather_pipeline.py`): Brooklyn, NY via OpenWeatherMap (daily)
+- **Forecast** (`forecast_pipeline/forecast_pipeline.py`): 5-day forecast via OpenWeatherMap (daily 6 AM)
+- **Monitor** (`monitoring/pipeline_monitor.py`): Health checks across all pipelines
 
-The repo also includes pipelines demonstrating multi-source ingestion:
-- **Crypto** (`crypto_pipeline.py`): BTC, ETH, SOL via Coinbase API (6-hour schedule)
-- **Weather** (`weather_pipeline.py`): Brooklyn, NY via OpenWeatherMap API (daily)
-- **Forecast** (`forecast_pipeline.py`): 5-day weather forecast via OpenWeatherMap API (daily at 6 AM)
-- **Monitor** (`pipeline_monitor.py`): Health checks across all pipelines
-
-## Historical Backtest (`historical_backtest.py`)
+## Historical Backtest (`stock_pipeline/historical_backtest.py`)
 
 Pulls 3 years of monthly adjusted close prices and calculates:
 - Annualized return, volatility, and Sharpe ratio per stock
 - Category-level averages across the AI value chain
 - Build vs. Rent premium (proprietary AI vs. partnership AI)
-- Capex efficiency (Sharpe per $B of estimated AI spend, sourced from 2025/2026 earnings guidance)
+- Capex efficiency (Sharpe per $B of AI spend, from SEC EDGAR + earnings guidance)
 - Spearman rank correlation between AI% of capex and Sharpe ratio
 
 ## Infrastructure as Code
 
-AWS resources are defined in Terraform under `terraform/`, making the infrastructure fully reproducible:
-- **S3 bucket** - Data lake for stocks, crypto, weather, and forecast data
-- **Glue catalog database + 4 tables** - Schema definitions for Athena queries (stocks, crypto, weather, forecast)
-- **Athena workgroup** - Query engine with S3 results location
+AWS resources defined in Terraform under `terraform/`:
+- **S3 bucket** — data lake for all pipelines
+- **Glue catalog database + tables** — schema definitions for Athena queries
+- **Athena workgroup** — query engine with S3 results location
 
 ```bash
 cd terraform
@@ -77,65 +101,93 @@ terraform plan       # Preview resources (no changes applied)
 |-----------|-----------|
 | Orchestration | Apache Airflow 2.10.4 (CeleryExecutor) |
 | Infrastructure | Docker Compose (6 containers, PostgreSQL 16) |
-| Storage | AWS S3 (NDJSON, date-partitioned) |
+| Storage | AWS S3 (NDJSON, Hive-style partitions) |
 | Query Engine | AWS Athena (Presto SQL) |
 | Visualization | Power BI |
+| IaC | Terraform |
 | Language | Python 3.12 |
 | Key Libraries | boto3, pandas, numpy, requests |
+| Testing | pytest + moto (112 tests, AWS mocked at HTTP layer) |
+
+## Testing
+
+112 tests across all pipelines, using moto to mock AWS at the HTTP layer — no real AWS calls in CI.
+
+```bash
+pytest tests/ -v        # Run all 112 tests
+pytest tests/test_edgar_pipeline.py -v   # Single pipeline
+make lint               # flake8 across all source dirs
+```
+
+| Test File | Tests | Coverage |
+|-----------|-------|---------|
+| test_stock_pipeline.py | 9 | transform + load |
+| test_weather_pipeline.py | 8 | transform + load |
+| test_edgar_pipeline.py | 16 | extract helper, transform, load |
+| test_fred_pipeline.py | 11 | transform + load |
+| test_historical_backfill.py | 11 | format, write, register |
+| test_analysis_pipeline.py | 6 | DAG structure |
+| test_sharpe_calculation.py | 8 | Sharpe math |
+| test_data_quality.py | 16 | validation rules |
+| test_portfolio_analysis.py | 12 | portfolio metrics |
+| test_forecast_pipeline.py | 15 | transform + load |
 
 ## Security
 
-All credentials managed via environment variables - zero hardcoded secrets:
+All credentials managed via environment variables — zero hardcoded secrets:
 - AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
-- API keys (`ALPHA_VANTAGE_API_KEY`, `OPENWEATHER_API_KEY`)
+- API keys (`ALPHA_VANTAGE_API_KEY`, `OPENWEATHER_API_KEY`, `FRED_API_KEY`)
 - Injected into Airflow containers via Docker Compose `.env` file
-- `.gitignore` prevents credential files from being committed
+- Global `.gitignore` prevents credential files from being committed
 
 ## Project Structure
 
 ```
 data-engineering-portfolio/
-├── config.py                          # Central constants (symbols, S3 bucket, capex data)
+├── config.py                          # Central constants (symbols, S3 bucket, FRED series, EDGAR CIKs)
 ├── stock_pipeline/
-│   ├── stock_pipeline.py              # Airflow DAG: 10-stock ingestion
+│   ├── stock_pipeline.py              # Airflow DAG: 10-stock daily ingestion
 │   ├── historical_backtest.py         # 3-year Sharpe ratio analysis
-│   ├── portfolio_analysis.py          # Build vs Rent + capex efficiency
-│   ├── backtest_results.json          # Stock-level results
-│   ├── backtest_results.csv           # Stock-level CSV
-│   ├── powerbi_master.csv             # Power BI master dataset
-│   ├── build_vs_rent.csv              # Builders vs Integrators comparison
-│   ├── capex_efficiency.csv           # Sharpe per $B of AI spend
-│   ├── category_summary.csv           # Category-level averages
-│   └── value_chain_summary.csv        # Full value chain rankings
+│   ├── historical_backfill.py         # One-time S3 backfill script
+│   ├── portfolio_analysis.py          # Build vs Rent + capex efficiency CSVs
+│   └── *.csv / *.json                 # Power BI data files
+├── edgar_pipeline/
+│   └── edgar_pipeline.py             # Airflow DAG: SEC 10-K capex + revenue
+├── fred_pipeline/
+│   └── fred_pipeline.py              # Airflow DAG: FRED macro indicators
+├── analysis_pipeline/
+│   └── analysis_pipeline.py          # Airflow DAG: automated backtest trigger
 ├── crypto_pipeline/
-│   └── crypto_pipeline.py             # Airflow DAG: BTC, ETH, SOL
+│   └── crypto_pipeline.py            # Airflow DAG: BTC, ETH, SOL
 ├── weather_pipeline/
-│   └── weather_pipeline.py            # Airflow DAG: Brooklyn weather
+│   └── weather_pipeline.py           # Airflow DAG: Brooklyn weather
 ├── forecast_pipeline/
-│   └── forecast_pipeline.py           # Airflow DAG: 5-day weather forecast
+│   └── forecast_pipeline.py          # Airflow DAG: 5-day forecast
 ├── monitoring/
-│   ├── pipeline_monitor.py            # Airflow DAG: health checks
-│   └── data_quality.py                # Validation functions
+│   ├── pipeline_monitor.py           # Airflow DAG: health checks
+│   └── data_quality.py               # Validation functions
 ├── tests/
-│   ├── conftest.py                    # Shared pytest fixtures
-│   ├── test_sharpe_calculation.py     # Sharpe ratio unit tests
-│   ├── test_data_quality.py           # Data validation tests
-│   ├── test_portfolio_analysis.py     # Portfolio analysis tests
-│   └── test_forecast_pipeline.py      # Forecast pipeline tests
+│   ├── conftest.py                   # Shared moto S3 fixtures + Airflow stubs
+│   ├── test_stock_pipeline.py
+│   ├── test_edgar_pipeline.py
+│   ├── test_fred_pipeline.py
+│   ├── test_historical_backfill.py
+│   ├── test_analysis_pipeline.py
+│   ├── test_weather_pipeline.py
+│   ├── test_forecast_pipeline.py
+│   ├── test_sharpe_calculation.py
+│   ├── test_data_quality.py
+│   └── test_portfolio_analysis.py
 ├── queries/
-│   └── sample_queries.sql             # Athena SQL showcase queries
+│   └── sample_queries.sql            # Athena SQL showcase queries
 ├── terraform/
-│   ├── main.tf                        # S3, Glue, Athena resource definitions
-│   ├── variables.tf                   # Configurable parameters
-│   └── outputs.tf                     # Resource ARNs and names
-├── conftest.py                        # Root pytest conftest (sys.path setup)
-├── docker-compose.yaml                # Airflow cluster (6 containers)
-├── Makefile                           # dev shortcuts (make up/down/dags/test/lint)
-├── pytest.ini                         # Test configuration
-├── requirements.txt                   # Production dependencies
-├── requirements-dev.txt               # Dev/test dependencies
-├── .env.example                       # Template for credentials
-├── .gitignore
+│   ├── main.tf                       # S3, Glue, Athena resource definitions
+│   ├── variables.tf
+│   └── outputs.tf
+├── docker-compose.yaml               # Airflow cluster (6 containers)
+├── Makefile                          # make up/down/dags/test/lint/analyze
+├── .github/workflows/ci.yml          # CI: lint + pytest on every push
+├── .env.example                      # Credential template
 └── README.md
 ```
 
@@ -144,8 +196,8 @@ data-engineering-portfolio/
 ### Prerequisites
 - Docker Desktop
 - Python 3.12+
-- AWS account (S3, Athena)
-- API keys: Alpha Vantage, OpenWeatherMap
+- AWS account (S3, Athena, Glue)
+- API keys: Alpha Vantage, OpenWeatherMap, FRED (free at fred.stlouisfed.org/docs/api/api_key.html)
 
 ### Quick Start
 ```bash
@@ -160,29 +212,14 @@ cp .env.example .env
 # 3. Start Airflow
 docker compose up -d
 
-# 4. Copy DAGs to Airflow (also copies config.py)
+# 4. Copy DAGs to Airflow
 make dags
 
 # 5. Access Airflow UI
 # http://localhost:8090 (airflow/airflow)
 
-# 6. Run the historical backtest
-python stock_pipeline/historical_backtest.py
-```
-
-### Running Tests
-```bash
-# Install dev dependencies
-pip install -r requirements-dev.txt
-
-# Run all tests
-pytest tests/ -v
-
-# Run a specific test file
-pytest tests/test_sharpe_calculation.py -v
-
-# Lint
-make lint
+# 6. Run the historical backtest + portfolio analysis
+make analyze
 ```
 
 ### Makefile Commands
@@ -190,17 +227,20 @@ make lint
 make setup    # Copy DAGs + create .env from template
 make up       # Start Airflow stack
 make down     # Stop Airflow stack
-make dags     # Copy pipeline files (incl. config.py) into ./dags
-make test     # Run pytest
+make dags     # Copy all pipeline files into ./dags
+make test     # Run pytest (112 tests)
 make lint     # flake8 across all source dirs
+make analyze  # Run backtest + portfolio analysis, refresh all CSVs
 make logs     # Tail scheduler + worker logs
 make clean    # Remove __pycache__, logs, stopped containers
 ```
 
 ## Data Sources
 
-| Source | API | Rate Limit |
-|--------|-----|-----------|
-| [Alpha Vantage](https://www.alphavantage.co/) | Stock quotes + monthly history | 25 calls/day (free) |
-| [Coinbase](https://docs.cdp.coinbase.com/coinbase-app/docs/api-prices) | Crypto spot prices | No limit (public) |
-| [OpenWeatherMap](https://openweathermap.org/api) | Current weather | 1,000 calls/day (free) |
+| Source | API | Data | Rate Limit |
+|--------|-----|------|-----------|
+| [Alpha Vantage](https://www.alphavantage.co/) | Stock quotes + monthly history | Daily prices | 25 calls/day (free) |
+| [SEC EDGAR](https://www.sec.gov/developer) | Company Facts API | Annual 10-K filings | No limit (free) |
+| [FRED](https://fred.stlouisfed.org/docs/api/fred/) | Observations API | Macro indicators | No limit (free, key required) |
+| [Coinbase](https://docs.cdp.coinbase.com/coinbase-app/docs/api-prices) | Spot prices | Crypto | No limit (public) |
+| [OpenWeatherMap](https://openweathermap.org/api) | Current + forecast | Weather | 1,000 calls/day (free) |
