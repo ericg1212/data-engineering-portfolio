@@ -1,6 +1,5 @@
 """Tests for shared utils._s3_client() helper."""
 
-import os
 import pytest
 from moto import mock_aws
 from utils import _s3_client
