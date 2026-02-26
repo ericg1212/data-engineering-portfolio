@@ -1,6 +1,6 @@
 # Own the Model, Own the Returns
 
-A data engineering portfolio that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Five production Airflow pipelines ingest data from Alpha Vantage, SEC EDGAR, FRED, Coinbase, and OpenWeatherMap — storing in AWS S3, querying with Athena, and visualizing findings in Power BI. 112 tests with moto-mocked AWS.
+A data engineering portfolio that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Five production Airflow pipelines ingest data from Alpha Vantage, SEC EDGAR, FRED, Coinbase, and OpenWeatherMap — storing in AWS S3, querying with Athena, and visualizing findings in Power BI. 118 tests with moto-mocked AWS.
 
 ## Key Finding: The Market Rewards AI Builders, Not AI Renters
 
@@ -107,14 +107,14 @@ terraform plan       # Preview resources (no changes applied)
 | IaC | Terraform |
 | Language | Python 3.12 |
 | Key Libraries | boto3, pandas, numpy, requests |
-| Testing | pytest + moto (112 tests, AWS mocked at HTTP layer) |
+| Testing | pytest + moto (118 tests, AWS mocked at HTTP layer) |
 
 ## Testing
 
-112 tests across all pipelines, using moto to mock AWS at the HTTP layer — no real AWS calls in CI.
+118 tests across all pipelines, using moto to mock AWS at the HTTP layer — no real AWS calls in CI.
 
 ```bash
-pytest tests/ -v        # Run all 112 tests
+pytest tests/ -v        # Run all 118 tests
 pytest tests/test_edgar_pipeline.py -v   # Single pipeline
 make lint               # flake8 across all source dirs
 ```
@@ -228,7 +228,7 @@ make setup    # Copy DAGs + create .env from template
 make up       # Start Airflow stack
 make down     # Stop Airflow stack
 make dags     # Copy all pipeline files into ./dags
-make test     # Run pytest (112 tests)
+make test     # Run pytest (118 tests)
 make lint     # flake8 across all source dirs
 make analyze  # Run backtest + portfolio analysis, refresh all CSVs
 make logs     # Tail scheduler + worker logs

@@ -1,11 +1,9 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
-import boto3
 import logging
 import json
-import os
-from config import S3_BUCKET
+from utils import _s3_client
 
 logger = logging.getLogger(__name__)
 
@@ -26,21 +24,11 @@ dag = DAG(
     catchup=False,
 )
 
-def get_s3_client():
-    """Create S3 client using environment variables"""
-    return boto3.client(
-        's3',
-        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-        region_name=os.environ.get('AWS_DEFAULT_REGION', 'us-east-1')
-    )
-
 def check_weather_pipeline():
     """Check if weather data was loaded today"""
     try:
-        s3 = get_s3_client()
-        bucket = os.environ.get('S3_BUCKET', S3_BUCKET)
-        
+        s3, bucket = _s3_client()
+
         today = datetime.now().strftime('%Y-%m-%d')
         prefix = f"weather/{today}/"
         
@@ -75,8 +63,7 @@ def check_weather_pipeline():
 def check_stock_pipeline():
     """Check if stock data was loaded today"""
     try:
-        s3 = get_s3_client()
-        bucket = os.environ.get('S3_BUCKET', S3_BUCKET)
+        s3, bucket = _s3_client()
 
         today = datetime.now().strftime('%Y-%m-%d')
         prefix = f"stocks/{today}/"
@@ -115,8 +102,7 @@ def check_stock_pipeline():
 def check_crypto_pipeline():
     """Check if crypto data was loaded today"""
     try:
-        s3 = get_s3_client()
-        bucket = os.environ.get('S3_BUCKET', S3_BUCKET)
+        s3, bucket = _s3_client()
 
         today = datetime.now().strftime('%Y-%m-%d')
         prefix = f"crypto/{today}/"
