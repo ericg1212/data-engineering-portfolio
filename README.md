@@ -1,6 +1,6 @@
 # Own the Model, Own the Returns
 
-A data engineering portfolio that analyzes whether building proprietary AI delivers superior risk-adjusted returns versus integrating third-party AI. Five production Airflow pipelines ingest data from Alpha Vantage, SEC EDGAR, FRED, Coinbase, and OpenWeatherMap — storing in AWS S3 as Parquet, querying with Athena, and visualizing findings in Power BI. 163 tests with moto-mocked AWS.
+A data engineering portfolio proving a **+111.5% Sharpe ratio premium** for proprietary AI builders over third-party integrators (Spearman ρ = +0.800). Five production Airflow pipelines (Docker, CeleryExecutor) ingest data from Alpha Vantage, SEC EDGAR, FRED, Coinbase, and OpenWeatherMap — storing in a Hive-partitioned S3 data lake as Parquet/Snappy, querying with Athena, and visualizing findings in Power BI. Validated by 163 pytest unit tests with moto AWS mocking. Infrastructure codified end-to-end in Terraform.
 
 ## Key Finding: The Market Rewards AI Builders, Not AI Renters
 
@@ -106,6 +106,7 @@ terraform plan       # Preview resources (no changes applied)
 | Query Engine | AWS Athena (Presto SQL) |
 | Visualization | Power BI |
 | IaC | Terraform |
+| CI/CD | GitHub Actions (lint, pytest, CodeQL, Scorecard, SBOM, dependency review) |
 | Language | Python 3.12 |
 | Key Libraries | boto3, pandas, numpy, pyarrow, requests |
 | Testing | pytest + moto (163 tests, AWS mocked at HTTP layer) |
