@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+  - name: raw
+    database: PHARMA_CLIFF
+    schema: RAW
+    description: >
+      Raw landing zone tables loaded via Snowflake COPY INTO from S3 Parquet.
+      These are the unmodified source-of-truth tables — never queried by Streamlit directly.
+    tables:
+      - name: orange_book
+        description: FDA Orange Book NCE exclusivity records (filtered to NCE/NCE-1 codes)
+        columns:
+          - name: drug_name
+            tests: [not_null]
+          - name: exclusivity_code
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['NCE', 'NCE-1']
+          - name: exclusivity_date
+            tests: [not_null]
+
+      - name: yfinance
+        description: Daily OHLCV + market cap for 8 pharma tickers (5yr history)
+        columns:
+          - name: ticker
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['MRK', 'BMY', 'AZN', 'LLY', 'PFE', 'JNJ', 'ABBV', 'NVS']
+          - name: date
+            tests: [not_null]
+          - name: close
+            tests: [not_null]
+
+      - name: clinical_trials
+        description: Phase III trials by sponsor from ClinicalTrials.gov API v2
+        columns:
+          - name: nct_id
+            tests: [not_null, unique]
+          - name: ticker
+            tests: [not_null]
+          - name: phase
+            tests:
+              - accepted_values:
+                  values: ['PHASE3']

@@ -138,7 +138,7 @@ class TestYFinanceExtractor:
         mock_boto.return_value = mock_s3
 
         results = run(tickers=TICKERS, bucket="test-bucket")
-        assert len(results) == len(TICKERS)
+        assert len(results) == len(TICKERS)  # TICKERS drives count — add NVS there, test stays correct
         assert mock_s3.put_object.call_count == len(TICKERS)
 
 

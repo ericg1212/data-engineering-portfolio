@@ -112,41 +112,44 @@ def copy_into(
         return rows_loaded
 
 
-def load_orange_book(s3_path: str | None = None) -> int:
-    """Load latest Orange Book Parquet into RAW.ORANGE_BOOK."""
+# Default S3 paths per table — used when caller doesn't pass an explicit path
+_DEFAULT_PATHS: dict[str, str] = {
+    "orange_book":     "raw/orange_book/year={year}/month={month:02d}",
+    "yfinance":        "raw/yfinance",
+    "clinical_trials": "raw/clinical_trials/year={year}/month={month:02d}",
+}
+
+
+def load_table(table: str, s3_path: str | None = None) -> int:
+    """
+    Load any RAW table from its S3 Parquet path.
+    If s3_path is omitted, uses the default Hive-partitioned path for today.
+    """
     from datetime import datetime
     now = datetime.utcnow()
-    path = s3_path or f"raw/orange_book/year={now.year}/month={now.month:02d}"
+    path = s3_path or _DEFAULT_PATHS[table].format(
+        year=now.year, month=now.month
+    )
     with get_connection() as conn:
         ensure_tables_exist(conn)
-        return copy_into(conn, "orange_book", path)
+        return copy_into(conn, table, path)
+
+
+# Convenience wrappers kept for Airflow task callables and CLI use
+def load_orange_book(s3_path: str | None = None) -> int:
+    return load_table("orange_book", s3_path)
 
 
 def load_yfinance(s3_path: str | None = None) -> int:
-    """Load yFinance Parquet files into RAW.YFINANCE (all tickers)."""
-    from datetime import datetime
-    now = datetime.utcnow()
-    path = s3_path or f"raw/yfinance"
-    with get_connection() as conn:
-        ensure_tables_exist(conn)
-        return copy_into(conn, "yfinance", path)
+    return load_table("yfinance", s3_path)
 
 
 def load_clinical_trials(s3_path: str | None = None) -> int:
-    """Load Clinical Trials Parquet into RAW.CLINICAL_TRIALS."""
-    from datetime import datetime
-    now = datetime.utcnow()
-    path = s3_path or f"raw/clinical_trials/year={now.year}/month={now.month:02d}"
-    with get_connection() as conn:
-        ensure_tables_exist(conn)
-        return copy_into(conn, "clinical_trials", path)
+    return load_table("clinical_trials", s3_path)
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    n = load_orange_book()
-    print(f"Orange Book: {n} rows loaded")
-    n = load_yfinance()
-    print(f"yFinance: {n} rows loaded")
-    n = load_clinical_trials()
-    print(f"Clinical Trials: {n} rows loaded")
+    for tbl in ("orange_book", "yfinance", "clinical_trials"):
+        n = load_table(tbl)
+        print(f"{tbl}: {n} rows loaded")

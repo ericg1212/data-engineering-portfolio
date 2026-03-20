@@ -1,6 +1,6 @@
 """
 yFinance Extractor
-Pulls 5-year daily OHLCV + market cap for the 7 pharma tickers,
+Pulls 5-year daily OHLCV + market cap for the 8 pharma tickers,
 writes Parquet to S3 raw landing zone partitioned by ticker.
 
 Market cap is used as a revenue proxy for drawdown analysis
@@ -18,7 +18,7 @@ import yfinance as yf
 
 logger = logging.getLogger(__name__)
 
-TICKERS = ["MRK", "BMY", "AZN", "LLY", "PFE", "JNJ", "ABBV"]
+TICKERS = ["MRK", "BMY", "AZN", "LLY", "PFE", "JNJ", "ABBV", "NVS"]
 HISTORY_YEARS = 5
 
 S3_BUCKET = os.environ.get("S3_BUCKET", "data-engineering-portfolio-ericg")

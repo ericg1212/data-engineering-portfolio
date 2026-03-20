@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: mart_revenue_decline
+    description: >
+      Page 1 output. One row per drug cliff event with market cap pre/post and
+      % decline. Market cap is the revenue proxy; actual revenue deferred to v2.
+    columns:
+      - name: ticker
+        tests: [not_null]
+      - name: drug_name
+        tests: [not_null]
+      - name: cliff_year
+        tests: [not_null]
+
+  - name: mart_drawdown_timeline
+    description: >
+      Page 2 output. Full drawdown and recovery metrics per cliff event.
+      drawdown_pct is always <= 0; drawdown_duration_days always > 0.
+    columns:
+      - name: ticker
+        tests: [not_null]
+      - name: cliff_date
+        tests: [not_null]
+
+  - name: mart_pipeline_readiness
+    description: >
+      Page 3 output. One row per company (all 8 guaranteed via all_tickers CTE).
+      readiness_score bounded [0, 1]. readiness_flag: green/yellow/red.
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['MRK', 'BMY', 'AZN', 'LLY', 'PFE', 'JNJ', 'ABBV', 'NVS']
+      - name: readiness_score
+        tests: [not_null]
+      - name: readiness_flag
+        tests:
+          - accepted_values:
+              values: ['green', 'yellow', 'red']

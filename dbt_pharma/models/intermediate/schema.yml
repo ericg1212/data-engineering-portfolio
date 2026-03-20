@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: int_drug_company_map
+    description: >
+      Orange Book drugs joined to tickers via hardcoded lookup.
+      Only maps known drugs for the 8 companies in scope — unmapped drugs excluded.
+    columns:
+      - name: ticker
+        tests: [not_null]
+      - name: drug_name
+        tests: [not_null]
+
+  - name: int_cliff_events
+    description: >
+      One row per drug cliff event. Deduped by (ticker, drug_name) — earliest
+      NCE expiry wins. Includes cliff_category (past/imminent/near_term/long_term).
+    columns:
+      - name: ticker
+        tests: [not_null]
+      - name: drug_name
+        tests: [not_null]
+      - name: nce_expiry_date
+        tests: [not_null]
+      - name: cliff_category
+        tests:
+          - accepted_values:
+              values: ['past', 'imminent', 'near_term', 'long_term']
+
+  - name: int_stock_drawdown
+    description: >
+      Peak-to-trough price drawdown and recovery for each cliff event.
+      Peak = max close 2yr before cliff; trough = min close 12mo after cliff.
+    columns:
+      - name: ticker
+        tests: [not_null]
+      - name: drug_name
+        tests: [not_null]

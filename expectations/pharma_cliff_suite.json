@@ -47,7 +47,7 @@
       "expectation_type": "expect_column_values_to_be_in_set",
       "kwargs": {
         "column": "ticker",
-        "value_set": ["MRK", "BMY", "AZN", "LLY", "PFE", "JNJ", "ABBV"]
+        "value_set": ["MRK", "BMY", "AZN", "LLY", "PFE", "JNJ", "ABBV", "NVS"]
       },
       "meta": { "table": "stg_yfinance" }
     },
@@ -94,10 +94,10 @@
     },
     {
       "expectation_type": "expect_table_row_count_to_equal",
-      "kwargs": { "value": 7 },
+      "kwargs": { "value": 8 },
       "meta": {
         "table": "mart_pipeline_readiness",
-        "notes": "All 7 tickers must be present in readiness output"
+        "notes": "All 8 tickers must be present in readiness output"
       }
     },
     {

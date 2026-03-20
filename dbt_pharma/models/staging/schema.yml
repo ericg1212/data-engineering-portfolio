@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_orange_book
+    description: Cleaned Orange Book NCE records — type-cast, uppercased, NCE-only filter
+    columns:
+      - name: drug_name
+        tests: [not_null]
+      - name: exclusivity_date
+        tests: [not_null]
+      - name: exclusivity_code
+        tests:
+          - accepted_values:
+              values: ['NCE', 'NCE-1']
+
+  - name: stg_yfinance
+    description: Cleaned yFinance OHLCV — positive prices, no future dates, 8 tickers
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['MRK', 'BMY', 'AZN', 'LLY', 'PFE', 'JNJ', 'ABBV', 'NVS']
+      - name: date
+        tests: [not_null]
+      - name: close
+        tests: [not_null]
+
+  - name: stg_clinical_trials
+    description: Cleaned Phase III trials — deduplicated by nct_id, status normalized
+    columns:
+      - name: nct_id
+        tests: [not_null, unique]
+      - name: ticker
+        tests: [not_null]

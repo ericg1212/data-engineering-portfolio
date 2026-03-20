@@ -31,6 +31,7 @@ COMPANY_PIPELINE = {
     "PFE":  {"company": "Pfizer",               "sponsor_names": ["Pfizer"]},
     "JNJ":  {"company": "Johnson & Johnson",    "sponsor_names": ["Janssen", "Johnson"]},
     "ABBV": {"company": "AbbVie",               "sponsor_names": ["AbbVie"]},
+    "NVS":  {"company": "Novartis",             "sponsor_names": ["Novartis"]},
 }
 
 S3_BUCKET = os.environ.get("S3_BUCKET", "data-engineering-portfolio-ericg")

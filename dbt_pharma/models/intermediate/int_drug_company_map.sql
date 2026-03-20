@@ -19,7 +19,8 @@ company_lookup as (
         ('LLY',  'Eli Lilly'),
         ('PFE',  'Pfizer'),
         ('JNJ',  'Johnson & Johnson'),
-        ('ABBV', 'AbbVie')
+        ('ABBV', 'AbbVie'),
+        ('NVS',  'Novartis')
     ) as t(ticker, company_name)
 ),
 
@@ -52,6 +53,10 @@ mapped as (
             when ob.drug_name ilike '%humira%'      then 'ABBV'
             when ob.drug_name ilike '%skyrizi%'     then 'ABBV'
             when ob.drug_name ilike '%rinvoq%'      then 'ABBV'
+            -- Novartis: Entresto + Kisqali are small-molecule NCE drugs in Orange Book
+            -- Cosentyx (secukinumab) and Zolgensma are biologics — Purple Book only
+            when ob.drug_name ilike '%entresto%'    then 'NVS'
+            when ob.drug_name ilike '%kisqali%'     then 'NVS'
             else null  -- unmapped drugs excluded from analysis
         end as ticker
     from ob
