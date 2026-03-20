@@ -1,0 +1,124 @@
+{
+  "expectation_suite_name": "pharma_cliff_suite",
+  "ge_cloud_id": null,
+  "expectations": [
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": { "min_value": 1, "max_value": null },
+      "meta": { "notes": "Orange Book must have at least one NCE row" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "drug_name" },
+      "meta": { "table": "stg_orange_book" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "exclusivity_date" },
+      "meta": { "table": "stg_orange_book" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "exclusivity_code",
+        "value_set": ["NCE", "NCE-1"]
+      },
+      "meta": { "table": "stg_orange_book" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_greater_than",
+      "kwargs": { "column": "close", "value": 0 },
+      "meta": {
+        "table": "stg_yfinance",
+        "notes": "Stock close price must be positive"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_greater_than",
+      "kwargs": { "column": "open", "value": 0 },
+      "meta": { "table": "stg_yfinance" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_greater_than_or_equal_to",
+      "kwargs": { "column": "volume", "value": 0 },
+      "meta": { "table": "stg_yfinance" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "ticker",
+        "value_set": ["MRK", "BMY", "AZN", "LLY", "PFE", "JNJ", "ABBV"]
+      },
+      "meta": { "table": "stg_yfinance" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "nct_id" },
+      "meta": { "table": "stg_clinical_trials" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_unique",
+      "kwargs": { "column": "nct_id" },
+      "meta": { "table": "stg_clinical_trials" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "pct_decline",
+        "min_value": -100,
+        "max_value": 0
+      },
+      "meta": {
+        "table": "mart_revenue_decline",
+        "notes": "Revenue decline must be between -100% and 0%"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "ticker" },
+      "meta": { "table": "mart_revenue_decline" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "drug_name" },
+      "meta": { "table": "mart_revenue_decline" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "readiness_score",
+        "min_value": 0,
+        "max_value": 1
+      },
+      "meta": { "table": "mart_pipeline_readiness" }
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_equal",
+      "kwargs": { "value": 7 },
+      "meta": {
+        "table": "mart_pipeline_readiness",
+        "notes": "All 7 tickers must be present in readiness output"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_less_than_or_equal_to",
+      "kwargs": { "column": "drawdown_pct", "value": 0 },
+      "meta": {
+        "table": "mart_drawdown_timeline",
+        "notes": "Drawdown must be negative (price declined)"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_greater_than",
+      "kwargs": { "column": "drawdown_duration_days", "value": 0 },
+      "meta": {
+        "table": "mart_drawdown_timeline",
+        "notes": "Duration must be positive (trough is after cliff date)"
+      }
+    }
+  ],
+  "meta": {
+    "great_expectations_version": "0.18.0",
+    "notes": "Pharma Patent Cliff — source + mart validation suite"
+  }
+}

@@ -4,3 +4,11 @@ pandas>=2.1.0,<3.0.0
 numpy>=1.26.0,<2.0.0
 pyarrow>=14.0.0,<17.0.0
 requests>=2.31.0,<3.0.0
+
+# Project 2: Pharma Patent Cliff
+yfinance>=0.2.36,<1.0.0
+snowflake-connector-python>=3.6.0,<4.0.0
+dbt-snowflake>=1.7.0,<2.0.0
+great-expectations>=0.18.0,<1.0.0
+streamlit>=1.32.0,<2.0.0
+plotly>=5.20.0,<6.0.0

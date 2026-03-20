@@ -55,3 +55,15 @@ Thumbs.db
 
 # Logs
 *.log
+
+# dbt
+dbt_pharma/profiles.yml
+dbt_pharma/target/
+dbt_pharma/dbt_packages/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+streamlit_app/.streamlit/secrets.toml
+
+# Snowflake credentials
+*.snowflake
