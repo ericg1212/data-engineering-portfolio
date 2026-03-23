@@ -9,7 +9,7 @@ import io
 import pyarrow.parquet as pq
 from utils import (
     _s3_client, _athena_client, get_date_str,
-    s3_read_json, s3_write_json, s3_write_ndjson, s3_write_parquet, register_athena_partition
+    s3_read_json, s3_write_json, s3_write_parquet, register_athena_partition
 )
 
 
@@ -186,44 +186,6 @@ class TestS3WriteJson:
         s3.create_bucket(Bucket='test-bucket')
         s3_write_json(s3, 'test-bucket', 'out.json', {})
         head = s3.head_object(Bucket='test-bucket', Key='out.json')
-        assert head['ContentType'] == 'application/json'
-
-
-class TestS3WriteNdjson:
-    """s3_write_ndjson() writes a list of dicts as NDJSON to S3."""
-
-    @mock_aws
-    def test_each_line_is_valid_json(self, monkeypatch):
-        monkeypatch.setenv('AWS_ACCESS_KEY_ID', 'testing')
-        monkeypatch.setenv('AWS_SECRET_ACCESS_KEY', 'testing')
-        s3 = boto3.client('s3', region_name='us-east-1')
-        s3.create_bucket(Bucket='test-bucket')
-        records = [{'a': 1}, {'b': 2}, {'c': 3}]
-        s3_write_ndjson(s3, 'test-bucket', 'out.ndjson', records)
-        body = s3.get_object(Bucket='test-bucket', Key='out.ndjson')['Body'].read().decode()
-        lines = body.strip().split('\n')
-        assert len(lines) == 3
-        parsed = [json.loads(line) for line in lines]
-        assert parsed == records
-
-    @mock_aws
-    def test_single_record(self, monkeypatch):
-        monkeypatch.setenv('AWS_ACCESS_KEY_ID', 'testing')
-        monkeypatch.setenv('AWS_SECRET_ACCESS_KEY', 'testing')
-        s3 = boto3.client('s3', region_name='us-east-1')
-        s3.create_bucket(Bucket='test-bucket')
-        s3_write_ndjson(s3, 'test-bucket', 'single.ndjson', [{'only': 'one'}])
-        body = s3.get_object(Bucket='test-bucket', Key='single.ndjson')['Body'].read().decode()
-        assert json.loads(body) == {'only': 'one'}
-
-    @mock_aws
-    def test_content_type_is_json(self, monkeypatch):
-        monkeypatch.setenv('AWS_ACCESS_KEY_ID', 'testing')
-        monkeypatch.setenv('AWS_SECRET_ACCESS_KEY', 'testing')
-        s3 = boto3.client('s3', region_name='us-east-1')
-        s3.create_bucket(Bucket='test-bucket')
-        s3_write_ndjson(s3, 'test-bucket', 'out.ndjson', [{'x': 1}])
-        head = s3.head_object(Bucket='test-bucket', Key='out.ndjson')
         assert head['ContentType'] == 'application/json'
 
 

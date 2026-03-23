@@ -12,17 +12,15 @@ Note: Reads from Alpha Vantage directly until Session 11, when
 historical_backtest.py is updated to read from Athena instead.
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 import logging
-
-
-def log_failure(context):
-    dag_id = context['dag'].dag_id
-    task_id = context['task_instance'].task_id
-    execution_date = context['execution_date']
-    logging.error(f"DAG {dag_id} task {task_id} failed at {execution_date}")
+from utils import log_failure
 
 
 default_args = {
@@ -48,8 +46,8 @@ dag = DAG(
 run_backtest = BashOperator(
     task_id='run_backtest',
     bash_command=(
-        'PYTHONPATH=/opt/airflow/dags '
-        'python /opt/airflow/stock_pipeline/historical_backtest.py'
+        'PYTHONPATH=/opt/airflow/repo '
+        'python /opt/airflow/repo/stock_pipeline/historical_backtest.py'
     ),
     dag=dag,
 )
@@ -57,8 +55,8 @@ run_backtest = BashOperator(
 run_portfolio_analysis = BashOperator(
     task_id='run_portfolio_analysis',
     bash_command=(
-        'PYTHONPATH=/opt/airflow/dags '
-        'python /opt/airflow/stock_pipeline/portfolio_analysis.py'
+        'PYTHONPATH=/opt/airflow/repo '
+        'python /opt/airflow/repo/stock_pipeline/portfolio_analysis.py'
     ),
     dag=dag,
 )

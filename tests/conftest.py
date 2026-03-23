@@ -108,17 +108,6 @@ def sample_backtest_results():
 
 
 @pytest.fixture
-def valid_weather_data():
-    """Valid weather data that should pass all quality checks."""
-    return {
-        'temperature': 72.5,
-        'humidity': 55,
-        'description': 'Clear',
-        'city': 'Brooklyn',
-    }
-
-
-@pytest.fixture
 def valid_stock_data():
     """Valid stock data list that should pass all quality checks."""
     return [

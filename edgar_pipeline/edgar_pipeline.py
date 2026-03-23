@@ -23,17 +23,10 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 import pandas as pd
 from config import EDGAR_CIKS, GLUE_DATABASE, ATHENA_WORKGROUP, EDGAR_SCHEMA
-from utils import _s3_client, _athena_client, get_date_str, s3_read_json, s3_write_json, s3_write_parquet, partition_exists
+from utils import _s3_client, _athena_client, get_date_str, s3_read_json, s3_write_json, s3_write_parquet, partition_exists, log_failure
 from monitoring.data_quality import validate_edgar_data
 
 logger = logging.getLogger(__name__)
-
-
-def log_failure(context):
-    dag_id = context['dag'].dag_id
-    task_id = context['task_instance'].task_id
-    execution_date = context['execution_date']
-    logging.error(f"DAG {dag_id} task {task_id} failed at {execution_date}")
 
 
 # Revenue tags vary by company — try in order, use first with data
