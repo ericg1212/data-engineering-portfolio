@@ -32,8 +32,8 @@ CHARTS_DIR = os.path.join(SCRIPT_DIR, 'regime_charts')
 ANALYSIS_CSV = os.path.join(SCRIPT_DIR, 'regime_analysis.csv')
 SUMMARY_CSV = os.path.join(SCRIPT_DIR, 'regime_summary.csv')
 
-RATE_REGIMES = ['Low Rate', 'Rising Rate', 'High Rate']
-INFLATION_REGIMES = ['Low Inflation', 'Moderate Inflation', 'High Inflation']
+RATE_REGIMES = ['falling', 'rising', 'high']
+INFLATION_REGIMES = ['normal', 'elevated', 'high']
 
 # Regime background colors for time series shading
 REGIME_COLORS = {
@@ -60,15 +60,23 @@ def _load_csvs():
             f"regime_summary.csv not found at {SUMMARY_CSV}\n"
             "Run `make regime` first to generate input data."
         )
-    analysis = pd.read_csv(ANALYSIS_CSV, parse_dates=['date'])
+    analysis = pd.read_csv(ANALYSIS_CSV, parse_dates=['month'])
     summary = pd.read_csv(SUMMARY_CSV)
+    # Normalize summary columns to match script expectations
+    summary = summary.rename(columns={
+        'builder_premium': 'avg_builder_premium',
+        'n_months': 'month_count'
+    })
+    split = summary['combined_regime'].str.split('_', expand=True)
+    summary['rate_regime'] = split[0]
+    summary['inflation_regime'] = split[1]
     return analysis, summary
 
 
 def generate_heatmap(summary: pd.DataFrame):
     """Rate regime × inflation regime grid; cell = avg Sharpe premium, annotated with month count."""
-    pivot = summary.pivot(index='rate_regime', columns='inflation_regime', values='avg_builder_premium')
-    counts = summary.pivot(index='rate_regime', columns='inflation_regime', values='month_count')
+    pivot = summary.pivot_table(index='rate_regime', columns='inflation_regime', values='avg_builder_premium', aggfunc='mean')
+    counts = summary.pivot_table(index='rate_regime', columns='inflation_regime', values='month_count', aggfunc='sum')
 
     pivot = pivot.reindex(index=RATE_REGIMES, columns=INFLATION_REGIMES)
     counts = counts.reindex(index=RATE_REGIMES, columns=INFLATION_REGIMES)
@@ -147,15 +155,15 @@ def generate_time_series(analysis: pd.DataFrame):
             if regime != prev_regime:
                 if prev_regime is not None and start_date is not None:
                     color = REGIME_COLORS.get(prev_regime, '#f0f0f0')
-                    ax.axvspan(start_date, row['date'], alpha=0.25, color=color, label=prev_regime)
-                start_date = row['date']
+                    ax.axvspan(start_date, row['month'], alpha=0.25, color=color, label=prev_regime)
+                start_date = row['month']
                 prev_regime = regime
 
-    ax.plot(analysis['date'], analysis['builder_sharpe_premium'], color='#2c3e50',
+    ax.plot(analysis['month'], analysis['builder_premium'], color='#2c3e50',
             linewidth=1.5, label='Rolling Builder Premium')
     ax.axhline(0, color='gray', linewidth=0.8, linestyle='--')
-    ax.axhline(analysis['builder_sharpe_premium'].mean(), color='#e67e22',
-               linewidth=1.0, linestyle=':', label=f"Mean: {analysis['builder_sharpe_premium'].mean():+.1f}%")
+    ax.axhline(analysis['builder_premium'].mean(), color='#e67e22',
+               linewidth=1.0, linestyle=':', label=f"Mean: {analysis['builder_premium'].mean():+.1f}%")
 
     ax.set_xlabel('Date')
     ax.set_ylabel('Builder Sharpe Premium (%)')
