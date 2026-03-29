@@ -57,6 +57,12 @@ stock_pipeline/regime_summary.csv
 !stock_pipeline/backtest_results.json
 !stock_pipeline/backtest_results.csv
 !stock_pipeline/category_summary.csv
+!stock_pipeline/rolling_sharpe.csv
 
 # Logs
 *.log
+logs/
+lifecycle.json
+
+# Test coverage
+.coverage

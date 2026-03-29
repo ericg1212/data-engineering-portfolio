@@ -11,7 +11,7 @@ from utils import (
     s3_read_json, s3_write_json, s3_write_parquet, register_athena_partition,
     partition_exists, log_failure,
 )
-from data_quality import validate_stock_data, log_data_stats
+from monitoring.data_quality import validate_stock_data, log_data_stats
 
 # Setup logging
 logger = logging.getLogger(__name__)

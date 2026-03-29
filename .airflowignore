@@ -1,0 +1,8 @@
+logs
+logs/
+tests/
+archive_pipelines/
+dbt_pharma/
+pharma_patent_cliff/
+__pycache__/
+terraform/
