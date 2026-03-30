@@ -12,7 +12,7 @@
 ![Tests](https://img.shields.io/badge/Tests-213-brightgreen?style=flat-square)
 ![Stocks](https://img.shields.io/badge/Stocks%20Analyzed-10-blue?style=flat-square)
 
-A data engineering portfolio proving a **+111.5% Sharpe ratio premium** for proprietary AI builders over third-party integrators (Spearman ρ = +0.800). Four production Airflow pipelines (Docker, CeleryExecutor) ingest data from Alpha Vantage, SEC EDGAR, and FRED — storing in a Hive-partitioned S3 data lake as Parquet/Snappy, querying with Athena, and visualizing findings in Power BI. Validated by 213 pytest unit tests with moto AWS mocking. Infrastructure codified end-to-end in Terraform.
+A data engineering portfolio proving a **+94.5% Sharpe ratio premium** for proprietary AI builders over third-party integrators (Spearman ρ = +0.800). Four production Airflow pipelines (Docker, CeleryExecutor) ingest data from Alpha Vantage, SEC EDGAR, and FRED — storing in a Hive-partitioned S3 data lake as Parquet/Snappy, querying with Athena, and visualizing findings in Power BI. Validated by 184 pytest unit tests with moto AWS mocking. Infrastructure codified end-to-end in Terraform.
 
 ## Key Finding: The Market Rewards AI Builders, Not AI Renters
 
@@ -26,7 +26,7 @@ Analysis of risk-adjusted returns (Jan 2023 – present) across 10 major tech st
 | Control | AAPL, TSLA | 1.131 | Mixed AI exposure |
 | Legacy Tech | CRM, ORCL, ADBE | 0.247 | Traditional software |
 
-**Builder Premium: +111.5%** — Companies building proprietary AI outperform those renting it through partnerships by 111% on risk-adjusted returns. The premium has widened from +58.4% (Dec 2025) as AI integrators weakened in early 2026 while builders held up.
+**Builder Premium: +94.5%** — Companies building proprietary AI outperform those renting it through partnerships by 94% on risk-adjusted returns. The premium has widened from +58.4% (Dec 2025) as AI integrators weakened in early 2026 while builders held up.
 
 Spearman rank correlation between AI% of capex and Sharpe ratio: **ρ = +0.800** — the premium holds stock by stock, not just in aggregate.
 
