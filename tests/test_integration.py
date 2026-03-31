@@ -1,9 +1,6 @@
 """Integration tests: full extract→transform→load chain per pipeline using moto S3 + mocked HTTP."""
 
 import io
-import json
-import pytest
-from datetime import datetime
 from unittest.mock import patch, MagicMock
 
 import pyarrow.parquet as pq

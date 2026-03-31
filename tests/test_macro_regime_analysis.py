@@ -4,18 +4,16 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import io
-import re
-import math
-import json
-import pytest
-import numpy as np
-import pandas as pd
-import boto3
-import pyarrow as pa
-import pyarrow.parquet as pq
-from moto import mock_aws
-from unittest.mock import patch
+import io  # noqa: E402
+import re  # noqa: E402
+import math  # noqa: E402
+import pytest  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+import boto3  # noqa: E402
+import pyarrow as pa  # noqa: E402
+import pyarrow.parquet as pq  # noqa: E402
+from moto import mock_aws  # noqa: E402
 
 from stock_pipeline.macro_regime_analysis import (  # noqa: E402
     classify_regimes,

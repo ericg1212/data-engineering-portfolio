@@ -5,15 +5,15 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import json
-import pytest
-import pandas as pd
-import numpy as np
-from unittest.mock import patch, MagicMock
-from datetime import datetime
+import json  # noqa: E402
+import pytest  # noqa: E402
+import pandas as pd  # noqa: E402
+import numpy as np  # noqa: E402
+from unittest.mock import patch, MagicMock  # noqa: E402
+from datetime import datetime  # noqa: E402
 
-from stock_pipeline.historical_backtest import calculate_sharpe, get_dynamic_risk_free_rate
-from config import RISK_FREE_RATE
+from stock_pipeline.historical_backtest import calculate_sharpe, get_dynamic_risk_free_rate  # noqa: E402
+from config import RISK_FREE_RATE  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
