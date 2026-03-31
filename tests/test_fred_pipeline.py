@@ -255,8 +255,6 @@ class TestExtractFredData:
         which transform_fred_data then filters out."""
         monkeypatch.setenv('FRED_API_KEY', 'test-key')
 
-        from config import FRED_SERIES
-
         def side_effect(url, params, timeout):
             return _make_fred_response(params['series_id'], SAMPLE_OBSERVATIONS)
 

@@ -336,7 +336,7 @@ def run_local():
     if build_rent:
         print(f"\n  Builder premium: +{build_rent['premium_pct']}% on risk-adjusted returns")
 
-    capex_rows = capex_efficiency_analysis(results)
+    capex_efficiency_analysis(results)
     value_chain_summary(results)
 
     print("\n" + "=" * 70)

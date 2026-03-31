@@ -16,11 +16,10 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from airflow import DAG
-from airflow.operators.bash import BashOperator
-from datetime import datetime, timedelta
-import logging
-from utils import log_failure
+from airflow import DAG  # noqa: E402
+from airflow.operators.bash import BashOperator  # noqa: E402
+from datetime import datetime, timedelta  # noqa: E402
+from utils import log_failure  # noqa: E402
 
 
 default_args = {

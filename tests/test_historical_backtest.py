@@ -5,7 +5,6 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import json  # noqa: E402
 import pytest  # noqa: E402
 import pandas as pd  # noqa: E402
 import numpy as np  # noqa: E402

@@ -22,7 +22,7 @@ import os
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -75,7 +75,10 @@ def _load_csvs():
 
 def generate_heatmap(summary: pd.DataFrame):
     """Rate regime × inflation regime grid; cell = avg Sharpe premium, annotated with month count."""
-    pivot = summary.pivot_table(index='rate_regime', columns='inflation_regime', values='avg_builder_premium', aggfunc='mean')
+    pivot = summary.pivot_table(
+        index='rate_regime', columns='inflation_regime',
+        values='avg_builder_premium', aggfunc='mean',
+    )
     counts = summary.pivot_table(index='rate_regime', columns='inflation_regime', values='month_count', aggfunc='sum')
 
     pivot = pivot.reindex(index=RATE_REGIMES, columns=INFLATION_REGIMES)
@@ -109,7 +112,7 @@ def generate_heatmap(summary: pd.DataFrame):
     out = os.path.join(CHARTS_DIR, 'heatmap.png')
     plt.savefig(out, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"  heatmap.png saved")
+    print("  heatmap.png saved")
 
 
 def generate_bar_chart(summary: pd.DataFrame):
@@ -139,7 +142,7 @@ def generate_bar_chart(summary: pd.DataFrame):
     out = os.path.join(CHARTS_DIR, 'bar_chart.png')
     plt.savefig(out, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"  bar_chart.png saved")
+    print("  bar_chart.png saved")
 
 
 def generate_time_series(analysis: pd.DataFrame):
@@ -175,7 +178,7 @@ def generate_time_series(analysis: pd.DataFrame):
     out = os.path.join(CHARTS_DIR, 'time_series.png')
     plt.savefig(out, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"  time_series.png saved")
+    print("  time_series.png saved")
 
 
 def generate_decision_matrix(summary: pd.DataFrame):
@@ -236,7 +239,7 @@ def generate_decision_matrix(summary: pd.DataFrame):
     out = os.path.join(CHARTS_DIR, 'decision_matrix.png')
     plt.savefig(out, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"  decision_matrix.png saved")
+    print("  decision_matrix.png saved")
 
 
 def main():

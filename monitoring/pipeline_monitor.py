@@ -2,13 +2,13 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-from datetime import datetime, timedelta
-import io
-import logging
-import pyarrow.parquet as pq
-from utils import _s3_client, get_date_str, log_failure
+from airflow import DAG  # noqa: E402
+from airflow.operators.python import PythonOperator  # noqa: E402
+from datetime import datetime, timedelta  # noqa: E402
+import io  # noqa: E402
+import logging  # noqa: E402
+import pyarrow.parquet as pq  # noqa: E402
+from utils import _s3_client, get_date_str, log_failure  # noqa: E402
 
 logger = logging.getLogger(__name__)
 

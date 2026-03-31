@@ -27,7 +27,10 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 import pandas as pd
 from config import GLUE_DATABASE, ATHENA_WORKGROUP, FRED_SERIES, FRED_SCHEMA
-from utils import _s3_client, _athena_client, get_date_str, s3_read_json, s3_write_json, s3_write_parquet, partition_exists, log_failure
+from utils import (
+    _s3_client, _athena_client, get_date_str, s3_read_json,
+    s3_write_json, s3_write_parquet, partition_exists, log_failure,
+)
 from monitoring.data_quality import validate_fred_data
 
 logger = logging.getLogger(__name__)
