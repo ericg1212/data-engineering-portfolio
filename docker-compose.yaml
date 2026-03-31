@@ -71,7 +71,7 @@ x-airflow-common:
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
     # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pandas numpy boto3 pyarrow requests scipy}
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pandas numpy boto3 pyarrow requests scipy yfinance matplotlib seaborn}
     # PYTHONPATH: repo root mounted at /opt/airflow/repo so DAGs can import config, utils,
     # monitoring, stock_pipeline etc. without requiring `make dags` to copy source files.
     PYTHONPATH: /opt/airflow/repo
@@ -85,7 +85,7 @@ x-airflow-common:
     OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY:-}
     FRED_API_KEY: ${FRED_API_KEY:-}
   volumes:
-    - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+    - airflow-logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     # Mount repo root read-only: PYTHONPATH and DAGS_FOLDER both point here so all
@@ -301,3 +301,4 @@ services:
 
 volumes:
   postgres-db-volume:
+  airflow-logs:

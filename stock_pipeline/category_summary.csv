@@ -1,6 +1,6 @@
 category,avg_return,avg_volatility,avg_sharpe,stock_count
-Infrastructure,144.18,43.92,3.18,1
-AI Builder,66.83,31.1,1.985,2
-AI Integrator,28.59,25.01,0.939,2
-Control,48.59,39.41,1.131,2
-Legacy Tech,14.98,38.51,0.247,3
+Infrastructure,130.31,44.5,2.838,1
+AI Builder,57.69,32.47,1.641,2
+AI Integrator,26.52,24.77,0.883,2
+Control,43.52,39.37,1.006,2
+Legacy Tech,14.89,37.6,0.265,3

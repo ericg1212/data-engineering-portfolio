@@ -62,16 +62,6 @@ def s3_write_json(s3, bucket, key, data):
     )
 
 
-def s3_write_ndjson(s3, bucket, key, records):
-    """Write a list of dicts to S3 as NDJSON (one JSON object per line)."""
-    s3.put_object(
-        Bucket=bucket,
-        Key=key,
-        Body='\n'.join(json.dumps(record) for record in records),
-        ContentType='application/json',
-    )
-
-
 def partition_exists(s3, bucket, prefix):
     """Return True if any objects exist under the given S3 prefix."""
     resp = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=1)
@@ -96,33 +86,12 @@ def s3_write_parquet(s3, bucket, key, records, schema=None):
     )
 
 
-# Use run_etl() for new pipelines; existing pipelines pre-date this pattern.
-def run_etl(name, extract_fn, transform_fn, load_fn, logger):
-    logger.info(f"{name}: extract start")
-    try:
-        raw = extract_fn()
-    except Exception as e:
-        logger.error(f"{name}: extract failed: {e}")
-        raise
-    logger.info(f"{name}: extract success")
-
-    logger.info(f"{name}: transform start")
-    try:
-        transformed = transform_fn(raw)
-    except Exception as e:
-        logger.error(f"{name}: transform failed: {e}")
-        raise
-    logger.info(f"{name}: transform success")
-
-    logger.info(f"{name}: load start")
-    try:
-        result = load_fn(transformed)
-    except Exception as e:
-        logger.error(f"{name}: load failed: {e}")
-        raise
-    logger.info(f"{name}: load success")
-
-    return result
+def log_failure(context):
+    """Airflow on_failure_callback — shared across all DAGs."""
+    dag_id = context['dag'].dag_id
+    task_id = context['task_instance'].task_id
+    execution_date = context['execution_date']
+    logging.error(f"DAG {dag_id} task {task_id} failed at {execution_date}")
 
 
 def register_athena_partition(athena, table, partition_key, partition_value, s3_location):

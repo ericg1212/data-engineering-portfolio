@@ -23,17 +23,16 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import io
-import json
-import logging
-import warnings
-import requests
-import numpy as np
-import pandas as pd
-import pyarrow.parquet as pq
-from datetime import datetime
-from config import FRED_SERIES, RISK_FREE_RATE, RATE_LIMIT_DELAY
-from utils import _s3_client, s3_write_parquet
+import io  # noqa: E402
+import json  # noqa: E402
+import logging  # noqa: E402
+import requests  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+import pyarrow.parquet as pq  # noqa: E402
+from datetime import datetime  # noqa: E402
+from config import FRED_SERIES, RISK_FREE_RATE  # noqa: E402
+from utils import _s3_client, s3_write_parquet  # noqa: E402
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

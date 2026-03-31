@@ -23,13 +23,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import io
 import json
 import logging
-import requests
+import yfinance as yf
 import pandas as pd
 import numpy as np
 import pyarrow.parquet as pq
 from datetime import datetime
-from time import sleep
-from config import STOCKS, AI_CAPEX, RISK_FREE_RATE, RATE_LIMIT_DELAY
+from config import STOCKS, AI_CAPEX, RISK_FREE_RATE
 from utils import _s3_client
 from stock_pipeline.finance_utils import (
     calculate_annualized_return,
@@ -66,32 +65,17 @@ def get_dynamic_risk_free_rate(s3, bucket):
 
 
 def fetch_monthly_prices(symbol):
-    """Fetch monthly adjusted close prices from Alpha Vantage (3+ years)."""
-    api_key = os.environ['ALPHA_VANTAGE_API_KEY']
-    url = (
-        f"https://www.alphavantage.co/query"
-        f"?function=TIME_SERIES_MONTHLY_ADJUSTED"
-        f"&symbol={symbol}&apikey={api_key}"
-    )
+    """Fetch monthly adjusted close prices from yfinance (3+ years, no API key required)."""
+    ticker = yf.Ticker(symbol)
+    df = ticker.history(start='2022-12-01', interval='1mo', auto_adjust=True)
 
-    response = requests.get(url, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+    if df.empty:
+        raise ValueError(f"No monthly data returned for {symbol}")
 
-    if 'Monthly Adjusted Time Series' not in data:
-        raise ValueError(f"No monthly data returned for {symbol}: {list(data.keys())}")
+    df = df.reset_index()[['Date', 'Close']].rename(columns={'Date': 'date', 'Close': 'close'})
+    df['date'] = pd.to_datetime(df['date']).dt.tz_localize(None)
+    df = df[df['date'] >= pd.Timestamp('2022-12-01')].sort_values('date').reset_index(drop=True)
 
-    series = data['Monthly Adjusted Time Series']
-    records = []
-    for date_str, values in series.items():
-        date = datetime.strptime(date_str, '%Y-%m-%d')
-        if datetime(2022, 12, 1) <= date <= datetime.now():
-            records.append({
-                'date': date,
-                'close': float(values['5. adjusted close']),
-            })
-
-    df = pd.DataFrame(records).sort_values('date').reset_index(drop=True)
     logger.info(f"{symbol}: fetched {len(df)} monthly data points")
     return df
 
@@ -174,9 +158,6 @@ def run_backtest():
                     f"Vol={metrics['annualized_volatility']}%, "
                     f"Sharpe={metrics['sharpe_ratio']}"
                 )
-
-            if i < len(STOCKS) - 1:
-                sleep(RATE_LIMIT_DELAY)
 
         except Exception as e:
             logger.error(f"  {symbol} FAILED: {str(e)}")
@@ -275,7 +256,9 @@ def run_backtest():
     logger.info("=" * 70)
 
     # === SAVE RESULTS ===
-    output_dir = os.path.dirname(os.path.abspath(__file__))
+    # Use writable Docker mount if available, otherwise script directory (local runs)
+    output_dir = '/opt/airflow/stock_pipeline' if os.path.isdir('/opt/airflow/stock_pipeline') \
+        else os.path.dirname(os.path.abspath(__file__))
 
     stock_output = os.path.join(output_dir, 'backtest_results.json')
     with open(stock_output, 'w') as f:
