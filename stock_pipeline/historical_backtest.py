@@ -27,7 +27,6 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import pyarrow.parquet as pq
-from datetime import datetime
 from config import STOCKS, AI_CAPEX, RISK_FREE_RATE
 from utils import _s3_client
 from stock_pipeline.finance_utils import (
