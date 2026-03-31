@@ -3,23 +3,253 @@
     "symbol": "NVDA",
     "category": "Infrastructure",
     "ai_strategy": "Sells AI hardware",
-    "annualized_return": 144.18,
-    "annualized_volatility": 43.92,
-    "sharpe_ratio": 3.18,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23"
+    "annualized_return": 130.31,
+    "annualized_volatility": 44.5,
+    "sharpe_ratio": 2.838,
+    "max_drawdown": -21.6,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 2.69
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 2.707
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 2.752
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 2.678
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 2.524
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 2.573
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 2.589
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 2.122
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 2.029
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 2.555
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 3.172
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 2.886
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 2.549
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.686
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 1.35
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 0.543
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.683
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 0.641
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 0.729
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 1.209
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 1.084
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 1.226
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 1.208
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.695
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.905
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 1.322
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": 0.974
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": 1.277
+      }
+    ]
   },
   {
     "symbol": "META",
     "category": "AI Builder",
     "ai_strategy": "Proprietary (Llama, MTIA chips)",
-    "annualized_return": 79.07,
-    "annualized_volatility": 34.87,
-    "sharpe_ratio": 2.138,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23",
+    "annualized_return": 67.62,
+    "annualized_volatility": 36.66,
+    "sharpe_ratio": 1.735,
+    "max_drawdown": -32.03,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 3.708
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 3.768
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 3.545
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 2.961
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 1.807
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 1.77
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 1.76
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 1.22
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 1.805
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 2.061
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 2.013
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 1.779
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 1.59
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.707
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 1.116
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 0.565
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.833
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 1.031
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 1.159
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 1.531
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 1.083
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 0.79
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 0.429
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.394
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.392
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 0.154
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": -0.042
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": -0.181
+      }
+    ],
     "capex_2025_B": 72.2,
     "capex_2026_B": 125.0,
     "ai_pct_of_capex": 95,
@@ -29,12 +259,127 @@
     "symbol": "GOOGL",
     "category": "AI Builder",
     "ai_strategy": "Proprietary (Gemini, TPUs)",
-    "annualized_return": 54.59,
-    "annualized_volatility": 27.34,
-    "sharpe_ratio": 1.832,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23",
+    "annualized_return": 47.76,
+    "annualized_volatility": 28.29,
+    "sharpe_ratio": 1.547,
+    "max_drawdown": -24.2,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 1.659
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 1.292
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 1.768
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 1.688
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 1.852
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 1.708
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 2.252
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 1.292
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 0.829
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 1.163
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 1.793
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 1.324
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 1.495
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.848
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 0.752
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 0.095
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": -0.083
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": -0.005
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": -0.112
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 0.408
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 0.936
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 1.276
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 1.562
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 1.985
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 1.555
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 1.559
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": 2.142
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": 1.965
+      }
+    ],
     "capex_2025_B": 75.0,
     "capex_2026_B": 180.0,
     "ai_pct_of_capex": 80,
@@ -44,12 +389,127 @@
     "symbol": "MSFT",
     "category": "AI Integrator",
     "ai_strategy": "Partnership (OpenAI)",
-    "annualized_return": 19.86,
-    "annualized_volatility": 22.57,
-    "sharpe_ratio": 0.681,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23",
+    "annualized_return": 16.91,
+    "annualized_volatility": 22.68,
+    "sharpe_ratio": 0.569,
+    "max_drawdown": -32.34,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 2.165
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 2.276
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 2.485
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 2.256
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 1.18
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 1.171
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 1.324
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 0.984
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 1.105
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 1.497
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 0.822
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 0.521
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 0.538
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 0.141
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": -0.335
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": -0.718
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": -0.018
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 0.41
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 0.424
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 1.046
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 0.798
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 0.759
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 1.051
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.611
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.554
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 0.131
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": -0.033
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": -0.143
+      }
+    ],
     "capex_2025_B": 80.0,
     "capex_2026_B": 145.0,
     "ai_pct_of_capex": 60,
@@ -59,12 +519,127 @@
     "symbol": "AMZN",
     "category": "AI Integrator",
     "ai_strategy": "Partnership (Anthropic)",
-    "annualized_return": 37.32,
-    "annualized_volatility": 27.44,
-    "sharpe_ratio": 1.196,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23",
+    "annualized_return": 36.13,
+    "annualized_volatility": 26.85,
+    "sharpe_ratio": 1.197,
+    "max_drawdown": -22.41,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 2.021
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 1.717
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 2.96
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 2.631
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 2.246
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 1.853
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 1.884
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 1.513
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 1.08
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 1.872
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 1.616
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 1.644
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 1.708
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.956
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 0.744
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 0.17
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.167
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 0.528
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 0.448
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 0.818
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 0.923
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 0.587
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 0.947
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.4
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.164
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": -0.007
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": -0.064
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": 0.261
+      }
+    ],
     "capex_2025_B": 124.5,
     "capex_2026_B": 200.0,
     "ai_pct_of_capex": 40,
@@ -74,55 +649,630 @@
     "symbol": "CRM",
     "category": "Legacy Tech",
     "ai_strategy": "AI features (Einstein)",
-    "annualized_return": 17.8,
-    "annualized_volatility": 37.76,
-    "sharpe_ratio": 0.352,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23"
+    "annualized_return": 20.22,
+    "annualized_volatility": 36.3,
+    "sharpe_ratio": 0.447,
+    "max_drawdown": -42.62,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 1.735
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 1.479
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 1.852
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 1.312
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 0.92
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 0.186
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 0.593
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 0.438
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 0.423
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 0.907
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 1.125
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 0.964
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 0.855
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 0.708
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": -0.092
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": -0.321
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.017
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 0.465
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 0.215
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": -0.017
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 0.035
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": -0.595
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": -0.434
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": -1.534
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": -0.769
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": -1.31
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": -1.214
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": -0.926
+      }
+    ]
   },
   {
     "symbol": "ORCL",
     "category": "Legacy Tech",
     "ai_strategy": "Cloud/AI pivot",
-    "annualized_return": 30.89,
-    "annualized_volatility": 42.45,
-    "sharpe_ratio": 0.622,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23"
+    "annualized_return": 29.55,
+    "annualized_volatility": 41.83,
+    "sharpe_ratio": 0.611,
+    "max_drawdown": -50.01,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 0.944
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 0.877
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 0.923
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 1.083
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 0.644
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 0.388
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 0.578
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 0.588
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 0.546
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 1.455
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 1.487
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 1.44
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 1.413
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.3
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 1.215
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 0.374
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.665
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 0.977
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 1.09
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 1.435
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 1.112
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 1.155
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 1.036
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.359
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.476
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 0.164
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": 0.011
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": 0.213
+      }
+    ]
   },
   {
     "symbol": "ADBE",
     "category": "Legacy Tech",
     "ai_strategy": "AI-disrupted (Firefly)",
-    "annualized_return": -3.76,
-    "annualized_volatility": 35.33,
-    "sharpe_ratio": -0.234,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23"
+    "annualized_return": -5.11,
+    "annualized_volatility": 34.68,
+    "sharpe_ratio": -0.263,
+    "max_drawdown": -61.87,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 1.703
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 1.535
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 1.706
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 0.856
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 0.635
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 0.217
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 0.396
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 0.075
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 0.121
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 0.092
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": -0.228
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": -0.441
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": -0.72
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": -0.869
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": -0.623
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": -0.681
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": -0.527
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": -0.119
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": -1.345
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": -1.58
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": -1.805
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": -1.52
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": -1.385
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": -2.168
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": -1.105
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": -1.474
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": -1.823
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": -1.785
+      }
+    ]
   },
   {
     "symbol": "AAPL",
     "category": "Control",
     "ai_strategy": "Late mover (Apple Intelligence)",
-    "annualized_return": 28.63,
-    "annualized_volatility": 20.88,
-    "sharpe_ratio": 1.156,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23"
+    "annualized_return": 25.29,
+    "annualized_volatility": 21.03,
+    "sharpe_ratio": 1.012,
+    "max_drawdown": -19.71,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 1.725
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 1.063
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 0.86
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": 0.115
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": -0.059
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": 0.303
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": 0.307
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": 0.473
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": 0.806
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 1.445
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 1.269
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 1.076
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 1.272
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.156
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 1.416
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 1.172
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.957
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 0.133
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": -0.281
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": -0.564
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": -0.018
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 0.342
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 0.755
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.676
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.313
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 0.374
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": 0.344
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": 0.472
+      }
+    ]
   },
   {
     "symbol": "TSLA",
     "category": "Control",
     "ai_strategy": "Autonomous driving / robotics",
-    "annualized_return": 68.55,
-    "annualized_volatility": 57.94,
-    "sharpe_ratio": 1.106,
-    "months_analyzed": 38,
-    "start_date": "2022-12-30",
-    "end_date": "2026-02-23"
+    "annualized_return": 61.74,
+    "annualized_volatility": 57.71,
+    "sharpe_ratio": 1.001,
+    "max_drawdown": -35.95,
+    "months_analyzed": 39,
+    "start_date": "2022-12-01",
+    "end_date": "2026-03-01",
+    "rolling_sharpe": [
+      {
+        "date": "2023-12-01",
+        "rolling_sharpe_12m": 1.324
+      },
+      {
+        "date": "2024-01-01",
+        "rolling_sharpe_12m": 0.348
+      },
+      {
+        "date": "2024-02-01",
+        "rolling_sharpe_12m": 0.177
+      },
+      {
+        "date": "2024-03-01",
+        "rolling_sharpe_12m": -0.051
+      },
+      {
+        "date": "2024-04-01",
+        "rolling_sharpe_12m": 0.383
+      },
+      {
+        "date": "2024-05-01",
+        "rolling_sharpe_12m": -0.097
+      },
+      {
+        "date": "2024-06-01",
+        "rolling_sharpe_12m": -0.508
+      },
+      {
+        "date": "2024-07-01",
+        "rolling_sharpe_12m": -0.15
+      },
+      {
+        "date": "2024-08-01",
+        "rolling_sharpe_12m": -0.237
+      },
+      {
+        "date": "2024-09-01",
+        "rolling_sharpe_12m": 0.26
+      },
+      {
+        "date": "2024-10-01",
+        "rolling_sharpe_12m": 0.599
+      },
+      {
+        "date": "2024-11-01",
+        "rolling_sharpe_12m": 0.819
+      },
+      {
+        "date": "2024-12-01",
+        "rolling_sharpe_12m": 1.028
+      },
+      {
+        "date": "2025-01-01",
+        "rolling_sharpe_12m": 1.71
+      },
+      {
+        "date": "2025-02-01",
+        "rolling_sharpe_12m": 0.825
+      },
+      {
+        "date": "2025-03-01",
+        "rolling_sharpe_12m": 0.854
+      },
+      {
+        "date": "2025-04-01",
+        "rolling_sharpe_12m": 0.927
+      },
+      {
+        "date": "2025-05-01",
+        "rolling_sharpe_12m": 1.31
+      },
+      {
+        "date": "2025-06-01",
+        "rolling_sharpe_12m": 0.974
+      },
+      {
+        "date": "2025-07-01",
+        "rolling_sharpe_12m": 0.669
+      },
+      {
+        "date": "2025-08-01",
+        "rolling_sharpe_12m": 0.939
+      },
+      {
+        "date": "2025-09-01",
+        "rolling_sharpe_12m": 1.047
+      },
+      {
+        "date": "2025-10-01",
+        "rolling_sharpe_12m": 1.17
+      },
+      {
+        "date": "2025-11-01",
+        "rolling_sharpe_12m": 0.578
+      },
+      {
+        "date": "2025-12-01",
+        "rolling_sharpe_12m": 0.372
+      },
+      {
+        "date": "2026-01-01",
+        "rolling_sharpe_12m": 0.288
+      },
+      {
+        "date": "2026-02-01",
+        "rolling_sharpe_12m": 0.8
+      },
+      {
+        "date": "2026-03-01",
+        "rolling_sharpe_12m": 0.838
+      }
+    ]
   }
 ]

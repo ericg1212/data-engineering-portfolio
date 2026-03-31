@@ -1,8 +1,5 @@
 """Central configuration for data-engineering-portfolio.
 
-All pipeline DAGs import from here after `make dags` copies this file
-to the dags/ directory alongside the DAG files:
-
     from config import STOCK_SYMBOLS, S3_BUCKET, ...
 
 Standalone scripts (historical_backtest.py, portfolio_analysis.py) add
@@ -43,17 +40,6 @@ EDGAR_SCHEMA = pa.schema([
     pa.field('period_end', pa.string()),
     pa.field('filed', pa.string()),
     pa.field('extracted_at', pa.string()),
-])
-
-FORECAST_SCHEMA = pa.schema([
-    pa.field('city', pa.string()),
-    pa.field('forecast_time', pa.string()),
-    pa.field('temperature', pa.float64()),
-    pa.field('feels_like', pa.float64()),
-    pa.field('humidity', pa.int64()),
-    pa.field('description', pa.string()),
-    pa.field('wind_speed', pa.float64()),
-    pa.field('timestamp', pa.string()),
 ])
 
 # --- Stock pipeline ---
@@ -114,14 +100,6 @@ FRED_SERIES = {
 RISK_FREE_RATE = 0.045  # ~4.5% avg 10-year Treasury 2023-2025
 
 RATE_LIMIT_DELAY = 12  # seconds between Alpha Vantage API calls (free tier: 5/min)
-
-# --- Crypto pipeline ---
-
-CRYPTO_SYMBOLS = ['BTC-USD', 'ETH-USD', 'SOL-USD']
-
-# --- Weather pipeline ---
-
-WEATHER_CITY = 'Brooklyn'
 
 # --- AWS / Storage ---
 

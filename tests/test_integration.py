@@ -1,9 +1,6 @@
 """Integration tests: full extract→transform→load chain per pipeline using moto S3 + mocked HTTP."""
 
 import io
-import json
-import pytest
-from datetime import datetime
 from unittest.mock import patch, MagicMock
 
 import pyarrow.parquet as pq
@@ -17,11 +14,6 @@ from fred_pipeline.fred_pipeline import (
 from edgar_pipeline.edgar_pipeline import (
     extract_edgar_data, transform_fundamentals, load_to_s3 as edgar_load,
 )
-from forecast_pipeline.forecast_pipeline import (
-    extract_forecast, transform_forecast, load_to_s3 as forecast_load,
-)
-
-
 def _alpha_vantage_response(symbol):
     mock = MagicMock()
     mock.raise_for_status = MagicMock()
@@ -80,26 +72,6 @@ def _edgar_api_response(symbol):
         'entityName': symbol,
         'facts': META_FACTS,
     }
-    return mock
-
-
-OPENWEATHER_RESPONSE = {
-    'city': {'name': 'Brooklyn'},
-    'list': [
-        {
-            'dt_txt': '2026-03-22 06:00:00',
-            'main': {'temp': 55.0, 'feels_like': 50.0, 'humidity': 70},
-            'weather': [{'description': 'clear sky'}],
-            'wind': {'speed': 5.0},
-        }
-    ],
-}
-
-
-def _openweather_response():
-    mock = MagicMock()
-    mock.raise_for_status = MagicMock()
-    mock.json.return_value = OPENWEATHER_RESPONSE
     return mock
 
 
@@ -190,27 +162,3 @@ class TestEdgarPipelineFullChain:
         assert 'year' in records[0]
         assert 'capex_usd' in records[0]
         assert 'revenue_usd' in records[0]
-
-
-class TestForecastPipelineFullChain:
-
-    def test_forecast_pipeline_full_chain(self, s3_client, monkeypatch):
-        monkeypatch.setenv('OPENWEATHER_API_KEY', 'test-key')
-
-        with patch('forecast_pipeline.forecast_pipeline.requests.get',
-                   return_value=_openweather_response()):
-            extract_forecast()
-
-        transform_forecast()
-        result = forecast_load()
-
-        assert result.startswith('s3://test-bucket/forecast/')
-
-        objects = s3_client.list_objects_v2(Bucket='test-bucket', Prefix='forecast/date=')
-        assert objects['KeyCount'] >= 1
-        key = objects['Contents'][0]['Key']
-        body = s3_client.get_object(Bucket='test-bucket', Key=key)['Body'].read()
-        records = pq.read_table(io.BytesIO(body)).to_pylist()
-        assert len(records) > 0
-        assert 'city' in records[0]
-        assert 'temperature' in records[0]

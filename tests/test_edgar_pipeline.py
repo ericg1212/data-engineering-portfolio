@@ -4,7 +4,7 @@ import io
 import json
 import pytest
 from datetime import datetime
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock
 from botocore.exceptions import ClientError
 import pyarrow.parquet as pq
 

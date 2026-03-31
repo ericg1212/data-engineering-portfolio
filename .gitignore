@@ -48,10 +48,21 @@ Thumbs.db
 # Data files
 *.parquet
 
+# Generated regime charts (built from make regime_charts — not source)
+stock_pipeline/regime_charts/
+stock_pipeline/regime_analysis.csv
+stock_pipeline/regime_summary.csv
+
 # Backtest results (tracked - these are analysis output, not raw data)
 !stock_pipeline/backtest_results.json
 !stock_pipeline/backtest_results.csv
 !stock_pipeline/category_summary.csv
+!stock_pipeline/rolling_sharpe.csv
 
 # Logs
 *.log
+logs/
+lifecycle.json
+
+# Test coverage
+.coverage

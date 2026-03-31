@@ -7,41 +7,6 @@ class DataQualityError(Exception):
     """Raised when data quality checks fail"""
     pass
 
-def validate_weather_data(data: Dict[str, Any]) -> bool:
-    """
-    Validate weather data quality
-    Returns True if valid, raises DataQualityError if invalid
-    """
-    errors = []
-
-    # Check required fields
-    required_fields = ['temperature', 'humidity', 'description']
-    for field in required_fields:
-        if field not in data:
-            errors.append(f"Missing required field: {field}")
-
-    # Validate temperature range
-    temp = data.get('temperature', 0)
-    if temp < -100 or temp > 150:
-        errors.append(f"Temperature out of range: {temp}°F")
-
-    # Validate humidity
-    humidity = data.get('humidity', 0)
-    if humidity < 0 or humidity > 100:
-        errors.append(f"Humidity out of range: {humidity}%")
-
-    # Validate city name exists
-    if not data.get('city'):
-        errors.append("Missing city name")
-
-    if errors:
-        error_msg = "; ".join(errors)
-        logger.error(f"Weather data quality check failed: {error_msg}")
-        raise DataQualityError(error_msg)
-
-    logger.info("Weather data quality check passed")
-    return True
-
 def validate_stock_data(stocks: List[Dict[str, Any]]) -> bool:
     """
     Validate stock data quality
