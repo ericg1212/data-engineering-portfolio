@@ -46,7 +46,7 @@ Each month (Jan 2023 – Q1 2026) is classified into a combined macro regime usi
 | Rising rates, normal inflation, elevated unemployment | -0.370 | 3 |
 | Rising rates, high inflation, normal unemployment | -0.481 | 23 |
 
-The negative premium in rising-rate / high-inflation regimes (23 months) reflects the 2022–early 2023 Fed tightening cycle captured in the trailing 12-month rolling window — broad growth multiple compression, not an AI-specific signal. As monetary conditions normalized, the premium re-established. The **+92.0% overall result is a through-the-cycle figure**: calculated across Jan 2023 – Q1 2026, it captures both the compression period and the recovery — a more rigorous test than a point-in-time or single-regime measurement.
+The negative premium in rising-rate / high-inflation regimes (23 months) reflects the 2022–early 2023 Fed tightening cycle captured in the trailing 12-month rolling window — broad growth multiple compression, not an AI-specific signal. As monetary conditions normalized, the premium re-established. The **+92.0% overall result is a through-the-cycle figure**: calculated across Jan 2023 – Q1 2026, it captures both the compression period and the recovery.
 
 
 ![Dashboard](dashboard.png)
