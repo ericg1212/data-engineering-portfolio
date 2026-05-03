@@ -60,7 +60,7 @@ The negative premium in rising-rate / high-inflation regimes (23 months) reflect
 | Query Engine | AWS Athena (Presto SQL) |
 | Visualization | Power BI |
 | IaC | Terraform |
-| CI/CD | GitHub Actions (lint, pytest, CodeQL, Scorecard, SBOM, dependency review) |
+| CI/CD | GitHub Actions (lint, bandit, pip-audit, pytest, checkov) |
 | Language | Python 3.12 |
 | Key Libraries | boto3, pandas, numpy, pyarrow, requests |
 | Testing | pytest + moto (184 tests, AWS mocked at HTTP layer) |
@@ -172,11 +172,6 @@ CI/CD security pipeline on every push:
 - **bandit** — Python static analysis for security issues
 - **pip-audit** — dependency vulnerability scanning
 - **checkov** — Terraform IaC security scanning
-- **CodeQL** — GitHub's semantic code analysis
-- **Semgrep** — SAST rules for common vulnerability patterns
-- **Dependency Review** — flags newly introduced vulnerable packages on PRs
-- **OpenSSF Scorecard** — supply chain security scoring
-- **SBOM** — software bill of materials generated on every push
 
 Repo hardening:
 - Branch protection: CI required, no force push, no direct commits to main, linear history
@@ -232,11 +227,6 @@ data-engineering-portfolio/
 ├── Makefile                          # make up/down/test/lint/analyze/demo
 ├── LICENSE                           # MIT
 ├── .github/workflows/ci.yml          # CI: lint, pytest, bandit, pip-audit, checkov, terraform fmt
-├── .github/workflows/codeql.yml      # CodeQL semantic analysis
-├── .github/workflows/scorecard.yml   # OpenSSF Scorecard
-├── .github/workflows/semgrep.yml     # Semgrep SAST
-├── .github/workflows/sbom.yml        # Software bill of materials
-├── .github/workflows/dependency-review.yml  # PR dependency review
 ├── .env.example                      # Credential template
 └── README.md
 ```
