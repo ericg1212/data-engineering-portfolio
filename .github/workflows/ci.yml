@@ -58,10 +58,12 @@ jobs:
             --severity-level medium -q
 
       - name: Dependency vulnerability scan (pip-audit)
-        # continue-on-error: known vulns in apache-airflow 2.10.4, werkzeug, flask require
-        # Airflow 2→3 major version upgrade — tracked separately, not blocking merge
-        continue-on-error: true
-        run: pip-audit -r requirements.txt
+        # GHSA-w7rc-q6cm-f5gm + GHSA-p3v3-229h-mc63: Airflow 3.x-only fixes, tolerable_risk
+        # in single-user local dev — dismissed in Dependabot alerts #10 and #11
+        run: |
+          pip-audit -r requirements.txt \
+            --ignore-vuln GHSA-w7rc-q6cm-f5gm \
+            --ignore-vuln GHSA-p3v3-229h-mc63
 
       - name: Terraform IaC security scan (checkov)
         run: checkov -d terraform/ --framework terraform --quiet --compact
