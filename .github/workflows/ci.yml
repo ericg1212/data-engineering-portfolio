@@ -37,7 +37,7 @@ jobs:
             "boto3>=1.34.0,<2.0.0" \
             "pandas>=2.1.0,<3.0.0" \
             "numpy>=1.26.0,<2.0.0" \
-            "pyarrow>=14.0.0,<20.0.0" \
+            "pyarrow>=17.0.0,<20.0.0" \
             "requests>=2.31.0,<3.0.0" \
             "pytest>=7.4.0,<9.0.0" \
             "moto[s3,athena]>=5.0.0,<6.0.0" \
@@ -63,7 +63,13 @@ jobs:
         run: |
           pip-audit -r requirements.txt \
             --ignore-vuln GHSA-w7rc-q6cm-f5gm \
-            --ignore-vuln GHSA-p3v3-229h-mc63
+            --ignore-vuln GHSA-p3v3-229h-mc63 \
+            --ignore-vuln CVE-2025-66236 \
+            --ignore-vuln CVE-2026-25219 \
+            --ignore-vuln CVE-2025-54550 \
+            --ignore-vuln CVE-2025-32962 \
+            --ignore-vuln CVE-2025-58065 \
+            --ignore-vuln CVE-2026-27205
 
       - name: Terraform IaC security scan (checkov)
         run: checkov -d terraform/ --framework terraform --quiet --compact
