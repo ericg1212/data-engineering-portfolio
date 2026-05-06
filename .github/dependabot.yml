@@ -9,6 +9,9 @@ updates:
     labels:
       - "dependencies"
       - "security"
+    ignore:
+      - dependency-name: "apache-airflow"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
