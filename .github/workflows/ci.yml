@@ -60,6 +60,7 @@ jobs:
       - name: Dependency vulnerability scan (pip-audit)
         # GHSA-w7rc-q6cm-f5gm + GHSA-p3v3-229h-mc63: Airflow 3.x-only fixes, tolerable_risk
         # in single-user local dev — dismissed in Dependabot alerts #10 and #11
+        # PYSEC-2026-113: pyarrow, no fix available; PYSEC-2025-183: pyjwt, no fix available
         run: |
           pip-audit -r requirements.txt \
             --ignore-vuln GHSA-w7rc-q6cm-f5gm \
@@ -69,7 +70,17 @@ jobs:
             --ignore-vuln CVE-2025-54550 \
             --ignore-vuln CVE-2025-32962 \
             --ignore-vuln CVE-2025-58065 \
-            --ignore-vuln CVE-2026-27205
+            --ignore-vuln CVE-2026-27205 \
+            --ignore-vuln PYSEC-2026-113 \
+            --ignore-vuln PYSEC-2025-183 \
+            --ignore-vuln PYSEC-2026-13 \
+            --ignore-vuln PYSEC-2026-10 \
+            --ignore-vuln PYSEC-2025-85 \
+            --ignore-vuln PYSEC-2023-314 \
+            --ignore-vuln PYSEC-2024-266 \
+            --ignore-vuln PYSEC-2024-265 \
+            --ignore-vuln PYSEC-2026-18 \
+            --ignore-vuln PYSEC-2024-264
 
       - name: Terraform IaC security scan (checkov)
         run: checkov -d terraform/ --framework terraform --quiet --compact

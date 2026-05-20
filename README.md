@@ -1,5 +1,8 @@
 # Own the Model, Own the Returns
 
+<div align="center">
+
+[![CI](https://github.com/ericg1212/sharpe-premium-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/ericg1212/sharpe-premium-pipeline/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat-square&logo=apacheairflow&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white)
@@ -7,10 +10,23 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
-&nbsp;
+
+<br/>
+
+![Builder Premium](https://img.shields.io/badge/Builder%20Premium-%2B92.0%25-22c55e?style=flat-square)
+![Spearman](https://img.shields.io/badge/Spearman%20%CF%81-%2B0.800-0ea5e9?style=flat-square)
+![p-value](https://img.shields.io/badge/p--value-≈0.005-8b5cf6?style=flat-square)
 ![Pipelines](https://img.shields.io/badge/Pipelines-4-brightgreen?style=flat-square)
 ![Tests](https://img.shields.io/badge/Tests-184-brightgreen?style=flat-square)
-![Stocks](https://img.shields.io/badge/Stocks%20Analyzed-10-blue?style=flat-square)
+![Stocks](https://img.shields.io/badge/Universe-10%20Stocks-blue?style=flat-square)
+
+<br/>
+
+**By [Eric Grynspan](https://www.linkedin.com/in/ericgrynspan/)** &nbsp;·&nbsp; [Portfolio](https://ericg1212.github.io)
+
+</div>
+
+---
 
 $650B in AI spend forecast for 2026 across Big Tech. The companies spending the most aren't earning the most — the premium flows to builders. This pipeline quantifies that relationship: a **+92.0% Sharpe ratio premium** for proprietary AI builders over third-party integrators (Spearman ρ = +0.800, p ≈ 0.005), derived from four production Airflow pipelines ingesting market prices, SEC 10-K filings, and FRED macro indicators.
 
