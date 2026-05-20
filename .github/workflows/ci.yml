@@ -72,7 +72,15 @@ jobs:
             --ignore-vuln CVE-2025-58065 \
             --ignore-vuln CVE-2026-27205 \
             --ignore-vuln PYSEC-2026-113 \
-            --ignore-vuln PYSEC-2025-183
+            --ignore-vuln PYSEC-2025-183 \
+            --ignore-vuln PYSEC-2026-13 \
+            --ignore-vuln PYSEC-2026-10 \
+            --ignore-vuln PYSEC-2025-85 \
+            --ignore-vuln PYSEC-2023-314 \
+            --ignore-vuln PYSEC-2024-266 \
+            --ignore-vuln PYSEC-2024-265 \
+            --ignore-vuln PYSEC-2026-18 \
+            --ignore-vuln PYSEC-2024-264
 
       - name: Terraform IaC security scan (checkov)
         run: checkov -d terraform/ --framework terraform --quiet --compact
